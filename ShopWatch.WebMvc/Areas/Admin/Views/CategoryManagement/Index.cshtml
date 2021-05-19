@@ -1,0 +1,94 @@
+﻿@using ShopWatch.BussinessLogicLayer
+@using ShopWatch.Model
+@model PaginatedList<Category>
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Quản Lý Danh Mục</h2>
+<hr />
+<div>
+	<a href="@Url.Action("AddCategory", "CategoryManagement")" class="btn btn-primary float-left">Thêm Danh Mục</a>
+
+	<form action="@Url.Action("Index", "CategoryManagement")" method="get" class="form-inline float-right">
+		<div class="form-group mx-sm-3 mb-2">
+			<input type="text" class="form-control mr-3" id="inputSearch" name="SearchString" value="@ViewData["currentFilter"]" placeholder="Tìm kiếm....">
+			<input type="submit" class=" form-control btn btn-primary mr-3" value="Tìm kiếm" /> |
+            <a href="/Admin/CategoryManagement/Index" class="btn btn-default">Trở lại danh sách đầy đủ</a>
+		</div>
+
+	</form>
+</div>
+@if (!Model.Any())
+{
+	<tr><td colspan="3" class="text-center">Don't have a category yet.</td></tr>
+}
+else
+{
+	<nav aria-label="Page navigation example">
+		<ul class="pagination justify-content-center">
+			@{ var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+				var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+				ViewBag.PageRange = 3; }
+			<li class="page-item">
+				<a href="@Url.Action("Index", "CategoryManagement", new { sortOrder=ViewData["CurrentSort"], page=1, currentFilter=ViewData["CurrentFilter"] })"
+				   class="btn page-link @prevDisabled"><<</a>
+			<li class="page-item">
+				<a href="@Url.Action("Index", "CategoryManagement", new { sortOrder=ViewData["CurrentSort"], page=(Model.PageIndex - 1 <= 0 ? 1 : Model.PageIndex - 1), currentFilter=ViewData["CurrentFilter"] })"
+				   class="btn page-link @prevDisabled"><</a>
+			</li>
+			@for (int i = 1; i <= Model.TotalPages; i++)
+			{
+				if (i >= Model.PageIndex - ViewBag.PageRange && i <= Model.PageIndex + ViewBag.PageRange)
+				{
+					<li class="page-item">
+						<a class="@(i == Model.PageIndex ? "Current" : "") page-link"
+						   href="@Url.Action("Index", "CategoryManagement", new { sortOrder = ViewData["CurrentSort"], page = i, currentFilter = ViewData["CurrentFilter"] })">@i</a>
+					</li>
+				}
+			}
+			<li class="page-item">
+				<a href="@Url.Action("Index", "CategoryManagement", new { sortOrder=ViewData["CurrentSort"], page=(Model.PageIndex + 1 > Model.TotalPages ? Model.TotalPages : Model.PageIndex + 1), currentFilter=ViewData["CurrentFilter"] })"
+				   class="btn page-link @nextDisabled">></a>
+			<li class="page-item">
+				<a href="@Url.Action("Index", "CategoryManagement", new { sortOrder=ViewData["CurrentSort"], page=(Model.TotalPages), currentFilter=ViewData["CurrentFilter"] })"
+				   class="btn page-link @nextDisabled">>></a>
+		</ul>
+	</nav>
+
+	<table class="table table-condensed table-bordered">
+		<tr class="d-flex">
+			<th class="col-md-2">
+				<a href="@Url.Action("Index", "CategoryManagement", new { sortOrder = ViewData["NameSortParm"], currentFilter = ViewData["CurrentFilter"] })">Tên Danh Mục</a>
+			</th>
+			<th class="col-md-6">Mô tả</th>
+			<th class="col-md-2">
+				<a href="@Url.Action("Index", "CategoryManagement", new { sortOrder = ViewData["TotalSortParm"], currentFilter = ViewData["CurrentFilter"] })">Tổng Đồng Hồ</a>
+			</th>
+			<th class="col-md-2">Quản Lý</th>
+		</tr>
+
+		@foreach (var category in Model)
+		{
+			<tr class="d-flex">
+				<td class="col-md-2">
+					@category.CategoryName
+				</td>
+				<td class="col-md-6">
+					@Html.Raw(category.Description)
+				</td>
+				<td class="col-md-2 text-center">
+					@category.Watches.Count()
+				</td>
+				<td class="col-md-2">
+					<form action="/Admin/CategoryManagement/DeleteCategory/@category.CategoryId" method="post">
+						<a href="/Admin/CategoryManagement/EditCategory/@category.CategoryId" class="btn btn-primary">Sửa</a>
+						<button type="submit" onclick="return confirm('Bạn có chắc muốn xóa danh mục này?');" class="btn btn-danger">Xóa</button>
+					</form>
+				</td>
+			</tr>
+		}
+	</table>
+}
+
