@@ -123,5 +123,5 @@ namespace ShopWatch.BussinessLogicLayer.IGennericRepository
 		{
 			_dbSet.AddOrUpdate(entity);
 		}
-	}
+    }
 }

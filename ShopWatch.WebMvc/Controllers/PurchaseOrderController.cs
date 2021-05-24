@@ -1,26 +1,36 @@
 ﻿using ShopWatch.BussinessLogicLayer.IService;
+using ShopWatch.Model;
 using ShopWatch.Model.DataContext;
 using ShopWatch.WebMvc.Models;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 
 namespace ShopWatch.WebMvc.Controllers
 {
-	public class PurchaseOrderController : Controller
+    public class PurchaseOrderController : Controller
     {
         private readonly ShopWatchDataContext _context;
         private readonly IOrderService _orderService;
-        public PurchaseOrderController(ShopWatchDataContext context,IOrderService orderService)
-		{
-            _context = context;
+        public PurchaseOrderController(/*ShopWatchDataContext context,*/ IOrderService orderService)
+        {
+            //_context = context;
+            _context = new ShopWatchDataContext();
             _orderService = orderService;
-		}
+        }
         public ActionResult Index()
         {
-			var session = (UserLogin)Session["UserSession"];
-            var user = _context.Users.SingleOrDefault(m => m.AccountId == session.AccountId);
-            var listOrder = _context.Orders.Where(m => m.UserId == user.UserId).ToList();
-            return View(listOrder);
+            try
+            {
+                var session = (UserLogin)Session["UserSession"];
+                var user = _context.Users.FirstOrDefault(m => m.AccountId == session.AccountId);
+                var listOrder = _context.Orders.Where(m => m.UserId == user.UserId).ToList();
+                return View(listOrder);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         public ActionResult Detail(int id)
         {
@@ -34,7 +44,16 @@ namespace ShopWatch.WebMvc.Controllers
             if (order == null) return HttpNotFound();
             order.Status = Model.Enum.Status.Cancelled;
             _orderService.Update(order);
-			return RedirectToAction("Index");
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

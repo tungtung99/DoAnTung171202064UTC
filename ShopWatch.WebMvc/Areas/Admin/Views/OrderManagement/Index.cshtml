@@ -55,7 +55,7 @@
 	<div>
 		@using (Html.BeginForm("Index", "OrderManagement", FormMethod.Get))
 		{
-			<span>Trạng thái:</span> @Html.DropDownList("status", EnumHelper.GetSelectList(typeof(ShopWatch.Model.Enum.Status)), "All Order", new { @onchange = "this.form.submit();" })
+			<span>Trạng thái:</span> @Html.DropDownList("status", EnumHelper.GetSelectList(typeof(ShopWatch.Model.Enum.Status)), "Tất cả hóa đơn", new { @onchange = "this.form.submit();" })
 		}
 	</div>
 	<table class="table table-condensed table-bordered">
@@ -74,7 +74,7 @@
 			<th class="col-md-2 text-center">
 				<a href="@Url.Action("Index", "OrderManagement", new { sortOrder = ViewData["TotalSortParm"], currentFilter = ViewData["CurrentFilter"] })">Tổng tiền</a>
 			</th>
-			<th class="col-md-1 text-center">Manage</th>
+			<th class="col-md-1 text-center">Quản lý</th>
 		</tr>
 
 		@foreach (var watch in Model)

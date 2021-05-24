@@ -5,10 +5,10 @@
 	ViewBag.Title = "Index";
 	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
-<h2>Quản Lý Nhà Sản Xuất</h2>
+<h2>Quản Lý Thương hiệu</h2>
 <hr />
 <div>
-	<a href="@Url.Action("AddPublisher", "PublisherManagement")" class="btn btn-primary float-left">Thêm Nhà Sản Xuất</a>
+	<a href="@Url.Action("AddPublisher", "PublisherManagement")" class="btn btn-primary float-left">Thêm thương hiệu</a>
 
 	<form action="@Url.Action("Index", "PublisherManagement")" method="get" class="form-inline float-right">
 
@@ -66,7 +66,7 @@ else
 	<table class="table table-condensed table-bordered">
 		<tr class="d-flex">
 			<th class="col-md-2">
-				<a href="@Url.Action("Index", "PublisherManagement", new { sortOrder = ViewData["NameSortParm"], currentFilter = ViewData["CurrentFilter"] })">Tên nhà sản xuất</a>
+				<a href="@Url.Action("Index", "PublisherManagement", new { sortOrder = ViewData["NameSortParm"], currentFilter = ViewData["CurrentFilter"] })">Tên thương hiệu</a>
 			</th>
 			<th class="col-md-4">Mô tả</th>
 			<th class="col-md-2">
@@ -94,7 +94,7 @@ else
 				<td class="col-md-2">
 					<form action="/Admin/PublisherManagement/DeletePublisher/@publisher.PublisherId" method="post">
 						<a href="/Admin/PublisherManagement/EditPublisher/@publisher.PublisherId" class="btn btn-primary">Sửa</a>
-						<button type="submit" onclick="return confirm('Bạn có chắc muốn xóa nhà sản xuất này?');" class="btn btn-danger">Xóa</button>
+						<button type="submit" onclick="return confirm('Bạn có chắc muốn xóa thương hiệu này?');" class="btn btn-danger">Xóa</button>
 					</form>
 				</td>
 			</tr>

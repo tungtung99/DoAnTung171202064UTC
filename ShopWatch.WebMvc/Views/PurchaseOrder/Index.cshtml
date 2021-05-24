@@ -44,7 +44,7 @@ else
 				<td class="col-md-1 text-center">
 					@if (watch.Status ==Status.Cancelled)
 					{
-						<span>Đã hủy-So Sad</span>
+						<span>Đã hủy</span>
 					}
 				</td>
 				<td class="col-md-1">
@@ -52,7 +52,7 @@ else
 					{
 						<form action="/Admin/PurchaseOrder/Cancelled/@watch.OrderId" method="post">
 							<a href="@Url.Action("Detail","PurchaseOrder", new { id=watch.OrderId })" class="btn btn-dark">Chi tiết</a>
-							<button type="submit" onclick="return confirm('Bạn có muốn hủy đơn hàng, tội shop :(');" class="btn btn-danger">Hủy</button>
+							<button type="submit" onclick="return confirm('Bạn có muốn hủy đơn hàng?);" class="btn btn-danger">Hủy</button>
 						</form>
 					}
 					else

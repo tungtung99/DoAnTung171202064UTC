@@ -59,21 +59,21 @@ else
 	<table class="table table-condensed table-bordered">
 		<tr class="d-flex">
 			<th class="col-md-2 text-center">
-				<a href="@Url.Action("Index", "PromotionManagement", new { sortOrder = ViewData["NameSortParm"], currentFilter = ViewData["CurrentFilter"] })">Promotion Name</a>
+				<a href="@Url.Action("Index", "PromotionManagement", new { sortOrder = ViewData["NameSortParm"], currentFilter = ViewData["CurrentFilter"] })">Tên khuyến mãi</a>
 			</th>
 			<th class="col-md-2 text-center">
-				<a href="@Url.Action("Index", "PromotionManagement", new { sortOrder = ViewData["StartSortParm"], currentFilter = ViewData["CurrentFilter"] })">Start Date</a>
+				<a href="@Url.Action("Index", "PromotionManagement", new { sortOrder = ViewData["StartSortParm"], currentFilter = ViewData["CurrentFilter"] })">Ngày bắt đầu</a>
 			</th>
 			<th class="col-md-2 text-center">
-				<a href="@Url.Action("Index", "PromotionManagement", new { sortOrder = ViewData["EndSortParm"], currentFilter = ViewData["CurrentFilter"] })">End Date</a>
+				<a href="@Url.Action("Index", "PromotionManagement", new { sortOrder = ViewData["EndSortParm"], currentFilter = ViewData["CurrentFilter"] })">Ngày kết thúc</a>
 			</th>
 			<th class="col-md-2 text-center">
-				<a href="@Url.Action("Index", "PromotionManagement", new { sortOrder = ViewData["PercentSortParm"], currentFilter = ViewData["CurrentFilter"] })">Percent</a>
+				<a href="@Url.Action("Index", "PromotionManagement", new { sortOrder = ViewData["PercentSortParm"], currentFilter = ViewData["CurrentFilter"] })">Phần trăm</a>
 			</th>
 			<th class="col-md-2 text-center">
-				<a href="@Url.Action("Index", "PromotionManagement", new { sortOrder = ViewData["TotalSortParm"], currentFilter = ViewData["CurrentFilter"] })">Total Watches Apply</a>
+				<a href="@Url.Action("Index", "PromotionManagement", new { sortOrder = ViewData["TotalSortParm"], currentFilter = ViewData["CurrentFilter"] })">Tổng đồng hồ đã thêm</a>
 			</th>
-			<th class="col-md-2 text-center">Manage</th>
+			<th class="col-md-2 text-center">Quản lý</th>
 		</tr>
 
 		@foreach (var promotion in Model)
@@ -96,8 +96,8 @@ else
 				</td>
 				<td class="col-md-2">
 					<form action="/Admin/PromotionManagement/DeletePromotion/@promotion.PromotionId" method="post">
-						<a href="/Admin/PromotionManagement/EditPromotion/@promotion.PromotionId" class="btn btn-primary">Edit</a>
-						<button type="submit" onclick="return confirm('Are you sure to delete this promotion?');" class="btn btn-danger">Delete</button>
+						<a href="/Admin/PromotionManagement/EditPromotion/@promotion.PromotionId" class="btn btn-primary">Sửa</a>
+						<button type="submit" onclick="return confirm('Are you sure to delete this promotion?');" class="btn btn-danger">Xóa</button>
 					</form>
 				</td>
 			</tr>
