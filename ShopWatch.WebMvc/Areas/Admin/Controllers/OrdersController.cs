@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using ShopWatch.Model;
 using ShopWatch.Model.DataContext;
+using ShopWatch.Model.Enum;
 
 namespace ShopWatch.WebMvc.Areas.Admin.Controllers
 {
@@ -129,5 +130,20 @@ namespace ShopWatch.WebMvc.Areas.Admin.Controllers
 			}
 			base.Dispose(disposing);
 		}
-	}
+        public bool Cancelled(int id)
+        {
+            try
+            {
+                var delete = db.Orders.Where(o => o.OrderId == id).FirstOrDefault();
+                delete.Status = Status.Cancelled;
+                db.SaveChanges();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }
+
+    }
 }

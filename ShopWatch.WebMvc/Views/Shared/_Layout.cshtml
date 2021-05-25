@@ -5,16 +5,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Luxury Watch - Đồng hồ phụ kiện chính hãng</title>
-	@Styles.Render("~/Assets/css")
-	@Scripts.Render("~/bundles/modernizr")
-	<!-- JavaScript Bundle with Popper -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-	<link rel="stylesheet" href="~/Assets/css/site.css" />
-    <link rel="shortcut icon" href="~/Assets/images/image icon/smart-watch.png"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Watch - Đồng hồ phụ kiện chính hãng</title>
+    @Styles.Render("~/Assets/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/Assets/css/site.css" />
+    <link rel="shortcut icon" href="~/Assets/images/image icon/smart-watch.png" />
+    <link href="~/Content/css/sweetalert.min.css" rel="stylesheet" />
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="~/Scripts/js/sweetalert.min.js"></script>
+    <script src="~/Scripts/js/410ba3b69f.js"></script>
 </head>
 <body>
 	<nav class="navbar navbar-expand-md navbar-light bg-warning fixed-top">
@@ -64,9 +68,6 @@
 		@Html.Partial("_SideBar")
 		<div class="col py-3">
 			@RenderBody()
-			<footer class="sticky-bottom">
-				<p>&copy; 2021 - Nguyen Xuan Tung </p>
-			</footer>
 		</div>
 		<hr />
 	</div>
@@ -75,7 +76,6 @@
 	<script src="~/Assets/js/site.js"></script>
 	@RenderSection("scripts", required: false)
 	<script>
-		console.log("trời ơi là trời")
 		function check() {
 			var phone = '^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$';
 			var email = '^([a-zA-Z0-9_|.])+@@(([a-zA-Z0-9|_])+).{1}([a-zA-Z])+.?([a-zA-Z])+$';

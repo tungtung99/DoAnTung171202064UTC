@@ -35,7 +35,7 @@ namespace ShopWatch.WebMvc.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		[ValidateInput(false)]
-		public ActionResult Login(LoginViewModel loginViewModel)
+        public ActionResult Login(LoginViewModel loginViewModel)
 		{
 			ViewBag.MessageLogin = "";
 			if (ModelState.IsValid)

@@ -19,12 +19,22 @@
 <hr />
 
 <div class="row">
+    @{var j = 0;}
     @foreach (var watch in Model)
     {
-        @Html.Partial("_WatchOverview", watch)
+        if (j < 4)
+        {
+            @Html.Partial("_WatchOverview", watch)
+        }
+        else
+        {
+            @Html.Partial("_WatchOverview1", watch)
+        }
+        j++;
+
     }
 </div>
-<nav aria-label="Page navigation example">
+<nav aria-label="Page navigation example" style="padding-top:10px">
     <ul class="pagination justify-content-center">
         @{ var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
             var nextDisabled = !Model.HasNextPage ? "disabled" : "";

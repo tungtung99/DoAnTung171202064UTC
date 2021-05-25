@@ -238,7 +238,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\CSS\Style.css" />
+    <Content Include="Scripts\js\410ba3b69f.js" />
+    <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Areas\Admin\Js\order.js" />
     <Content Include="Areas\Admin\Js\Script.js" />
+    <Content Include="Content\css\sweetalert.min.css" />
+    <Content Include="Scripts\js\sweetalert.min.js" />
     <Content Include="Areas\Admin\Views\PublisherManagement\Index.cshtml" />
     <Content Include="Assets\css\all.css" />
     <Content Include="Assets\css\bootstrap-grid.css" />
@@ -995,6 +1000,7 @@
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\PurchaseOrder\Index.cshtml" />
     <Content Include="Views\PurchaseOrder\Detail.cshtml" />
+    <Content Include="Views\Shared\_WatchOverview1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
