@@ -4,14 +4,14 @@
 	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 	ViewBag.Title = "Edit Category"; }
 <script src="~/Assets/js/ckeditor/ckeditor.js"></script>
-<h2>Edit Category</h2>
+<h2>Chỉnh sửa loại sản phẩm</h2>
 <hr />
 
 <form action="/Admin/CategoryManagement/EditCategory" method="post" class="row form-horizontal">
 	@Html.AntiForgeryToken()
 	<div class="col">
 		<div class="form-group">
-			<label name="CategoryId" class="control-label">Category Id:</label>
+			<label name="CategoryId" class="control-label">Id:</label>
 			<div>
 				<input type="text" name="CategoryId" class="form-control" readonly="readonly" value="@Model.CategoryId" />
 				@Html.ValidationMessageFor(m => m.CategoryId, "", new { @class = "text-danger" })
@@ -19,7 +19,7 @@
 		</div>
 
 		<div class="form-group">
-			<label name="Name" class="control-label">Category Name:</label>
+			<label name="Name" class="control-label">Tên loại sản phẩm:</label>
 			<div>
 				<input type="text" name="CategoryName" class="form-control" value="@Model.CategoryName" />
 				@Html.ValidationMessageFor(m => m.CategoryName, "", new { @class = "text-danger" })
@@ -29,7 +29,7 @@
 
 	<div class="col">
 		<div class="form-group">
-			<label class="control-label">Description:</label>
+			<label class="control-label">Mô tả:</label>
 			<div>
 				<textarea class="form-control" name="Description" id="ckeditor">@Model.Description</textarea>
 				@Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
@@ -37,8 +37,8 @@
 		</div>
 
 		<div class="form-group">
-			<input type="submit" class="btn btn-primary" value="Update" />
-			<a href="/Admin/CategoryManagement" class="btn btn-secondary">Cancel</a>
+			<input type="submit" class="btn btn-primary" value="Chỉnh sửa" />
+			<a href="/Admin/CategoryManagement" class="btn btn-secondary">Hủy</a>
 		</div>
 	</div>
 </form>

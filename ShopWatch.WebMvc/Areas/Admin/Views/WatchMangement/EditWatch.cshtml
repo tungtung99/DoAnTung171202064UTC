@@ -2,41 +2,41 @@
 @model Watch
 @{ ViewBag.Title = "AddWatch";
 	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml"; }
-<h2>Edit Watch</h2>
+<h2>Chỉnh sửa đồng hồ</h2>
 <hr />
 <form action="/Admin/WatchMangement/EditWatch" method="post" class="row form-horizontal" enctype="multipart/form-data">
 	@Html.AntiForgeryToken()
 	<div class="col">
 		<div class="form-group">
-			<label name="Name" class="control-label">Watch Name:</label>
+			<label name="Name" class="control-label">Tên đồng hồ:</label>
 			<div>
 				<input type="text" name="WatchName" class="form-control" value="@Model.WatchName" required />
 				@Html.ValidationMessageFor(m => m.WatchName, "", new { @class = "text-danger" })
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label">Description:</label>
+			<label class="control-label">Mô tả:</label>
 			<div>
 				<textarea class="form-control" name="Description" id="ckeditor" required>@Model.Description</textarea>
 				@Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label">Evaluate:</label>
+			<label class="control-label">Đánh giá:</label>
 			<div>
 				<textarea class="form-control" name="Evaluate" id="ckeditor" required>@Model.Evaluate</textarea>
 				@Html.ValidationMessageFor(m => m.Evaluate, "", new { @class = "text-danger" })
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label">Price:</label>
+			<label class="control-label">Giá:</label>
 			<div>
 				<input type="number" class="form-control" name="Price" min="1" value="@Model.Price" required />
 				@Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label">Quantity:</label>
+			<label class="control-label">Số lượng:</label>
 			<div>
 				<input type="number" class="form-control" name="Quantity" min="1" value="@Model.Quantity" required />
 				@Html.ValidationMessageFor(m => m.Quantity, "", new { @class = "text-danger" })
@@ -45,21 +45,21 @@
 	</div>
 	<div class="col">
 		<div class="form-group">
-			<label class="control-label">Watch Id</label>
+			<label class="control-label">Id</label>
 			<div>
 				<input type="text" name="WatchId" class="form-control" value="@Model.WatchId" readonly="readonly" />
 				@Html.ValidationMessageFor(m => m.WatchId, "", new { @class = "text-danger" })
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label">Category:</label>
+			<label class="control-label">Loại sản phẩm:</label>
 			<div class="input-group mb-3">
 				@Html.DropDownListFor(model => model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.Categories, htmlAttributes: new { @class = "form-control" })
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label class="control-label">Publisher:</label>
+			<label class="control-label">Thương hiệu:</label>
 			<div class="input-group mb-3">
 				@Html.DropDownListFor(model => model.PublisherId, (IEnumerable<SelectListItem>)ViewBag.Publishers, htmlAttributes: new { @class = "form-control" })
 
@@ -67,11 +67,11 @@
 		</div>
 
 		<div class="form-group">
-			<label class="control-label" for="ImgUrl">Image:</label>
+			<label class="control-label" for="ImgUrl">Ảnh:</label>
 			<div class="form-row">
 				<div class="col-6">
 					<input type="file" class="custom-file-input" id="validatedCustomFile" name="Img" onchange="readURL(this)">
-					<label class="custom-file-label" for="validatedCustomFile">Choose an image</label>
+					<label class="custom-file-label" for="validatedCustomFile">Chọn ảnh</label>
 				</div>
 				<div class="col-6">
 					<img id="FileImage" src="~/Assets/images/HINHLON/@Model.ImageUrl" name="ImgUrlhi" alt="your image" class="img-thumbnail" width="150" />
@@ -105,12 +105,12 @@
 		</div>
 		<div class="form-group form-check">
 			@Html.EditorFor(model => model.IsActive)
-			<label class="form-check-label" for="IsActive">Is Active?</label>
+			<label class="form-check-label" for="IsActive">Đang hoạt động?</label>
 			@Html.ValidationMessageFor(m => m.IsActive, "", new { @class = "text-danger" })
 		</div>
 		<div class="form-group">
-			<input type="submit" class="btn btn-primary" value="Save" />
-			<a href="/Admin/WatchMangement" class="btn btn-secondary">Cancel</a>
+			<input type="submit" class="btn btn-primary" value="Lưu" />
+			<a href="/Admin/WatchMangement" class="btn btn-secondary">Hủy</a>
 		</div>
 	</div>
 </form>

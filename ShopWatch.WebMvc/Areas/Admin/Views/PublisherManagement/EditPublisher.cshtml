@@ -5,20 +5,20 @@
 	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>EditPublisher</h2>
+<h2>Chỉnh sửa thương hiệu</h2>
 <hr />
 <form action="/Admin/PublisherManagement/EditPublisher" method="post" class="row form-horizontal" enctype="multipart/form-data">
 	@Html.AntiForgeryToken()
 	<div class="col">
 		<div class="form-group">
-			<label class="control-label">Publisher Id</label>
+			<label class="control-label">Id</label>
 			<div>
 				<input type="text" name="PublisherId" class="form-control" value="@Model.PublisherId" readonly="readonly" />
 				@Html.ValidationMessageFor(m => m.PublisherId, "", new { @class = "text-danger" })
 			</div>
 		</div>
 		<div class="form-group">
-			<label name="Name" class="control-label">Publisher Name:</label>
+			<label name="Name" class="control-label">Tên thương hiệu:</label>
 			<div>
 				<input type="text" name="PublisherName" class="form-control" value="@Model.PublisherName" required />
 				@Html.ValidationMessageFor(m => m.PublisherName, "", new { @class = "text-danger" })
@@ -28,18 +28,18 @@
 
 	<div class="col">
 		<div class="form-group">
-			<label class="control-label">Description:</label>
+			<label class="control-label">Mô tả:</label>
 			<div>
 				<textarea class="form-control" name="Description" id="ckeditor" required>@Model.Description</textarea>
 				@Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label" for="ImgUrl">Image :</label>
+			<label class="control-label" for="ImgUrl">Ảnh :</label>
 			<div class="form-row">
 				<div class="col-6">
 					<input type="file" class="custom-file-input" id="validatedCustomFile" name="ImgUrl" onchange="readURL(this)" required/>
-					<label class="custom-file-label" for="validatedCustomFile">Choose an image</label>
+					<label class="custom-file-label" for="validatedCustomFile">Chọn ảnh</label>
 				</div>
 				<div class="col-6">
 					<img id="FileImage" src="~/Assets/images/HINHTH/@Model.Image" name="ImgUrlhi" alt="your image" class="img-thumbnail" width="200" />
@@ -47,8 +47,8 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<input type="submit" class="btn btn-primary" value="Edit" />
-			<a href="/Admin/PublisherManagement" class="btn btn-secondary">Cancel</a>
+			<input type="submit" class="btn btn-primary" value="Chỉnh sửa" />
+			<a href="/Admin/PublisherManagement" class="btn btn-secondary">Hủy</a>
 		</div>
 	</div>
 </form>

@@ -238,6 +238,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\CSS\Style.css" />
+    <Content Include="Assets\js\slick.css" />
+    <Content Include="Assets\js\slick.min.js" />
     <Content Include="Scripts\js\410ba3b69f.js" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Areas\Admin\Js\order.js" />
