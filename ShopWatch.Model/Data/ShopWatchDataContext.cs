@@ -17,6 +17,8 @@ namespace ShopWatch.Model.DataContext
 		public DbSet<Promotion> Promotions { get; set; }
 		public DbSet<Order> Orders{ get; set; }
 		public DbSet<OrderDetail> OrderDetails { get; set; }
+		public DbSet<Comment> Comments { get; set; }
+		public DbSet<ReponseComment> ReponseComments { get; set; }
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<Watch>().HasMany<Promotion>(s => s.Promotions)
