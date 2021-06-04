@@ -152,6 +152,11 @@ namespace ShopWatch.WebMvc.Areas.Admin.Controllers
                         throw;
                     }
                 }
+                string dir = @"C:\Users\Admin\Desktop\watch1\ShopWatchFinal\ShopWatch.WebMvc\Assets\images\HINHNHO\" + watch.SmallImage;
+                if (!Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
                 if (small1 != null && small1.ContentLength > 0)
                 {
 

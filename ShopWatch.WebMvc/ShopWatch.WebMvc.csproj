@@ -238,6 +238,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\CSS\Style.css" />
+    <Content Include="Assets\images\HINHNHO\SP13\1.jpg" />
+    <Content Include="Assets\images\HINHNHO\SP13\2.jpg" />
+    <Content Include="Assets\images\HINHNHO\SP13\3.jpg" />
+    <Content Include="Assets\images\logo.jpg" />
     <Content Include="Assets\js\slick.css" />
     <Content Include="Assets\js\slick.min.js" />
     <Content Include="Scripts\js\410ba3b69f.js" />
@@ -279,17 +283,6 @@
     <Content Include="Assets\images\HINHLON\SP00012.jpg" />
     <Content Include="Assets\images\HINHLON\SP00013.jpg" />
     <Content Include="Assets\images\HINHLON\SP00014.jpg" />
-    <Content Include="Assets\images\HINHLON\SP00015.jpg" />
-    <Content Include="Assets\images\HINHLON\SP00016.jpg" />
-    <Content Include="Assets\images\HINHLON\SP00017.jpg" />
-    <Content Include="Assets\images\HINHLON\SP00018.jpg" />
-    <Content Include="Assets\images\HINHLON\SP00019.jpg" />
-    <Content Include="Assets\images\HINHLON\SP00020.jpg" />
-    <Content Include="Assets\images\HINHLON\SP00021.jpg" />
-    <Content Include="Assets\images\HINHLON\SP00022.jpg" />
-    <Content Include="Assets\images\HINHLON\SP00023.jpg" />
-    <Content Include="Assets\images\HINHLON\SP00024.jpg" />
-    <Content Include="Assets\images\HINHLON\SP00025.jpg" />
     <Content Include="Assets\images\HINHNHO\SP00001\1.jpg" />
     <Content Include="Assets\images\HINHNHO\SP00001\2.jpg" />
     <Content Include="Assets\images\HINHNHO\SP00001\3.jpg" />
@@ -1008,25 +1001,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Statistical\" />
-    <Folder Include="Assets\images\HINHNHO\SP13\" />
-    <Folder Include="Assets\images\HINHNHO\SP16\" />
-    <Folder Include="Assets\images\HINHNHO\SP18\" />
-    <Folder Include="Assets\images\HINHNHO\SP19\" />
-    <Folder Include="Assets\images\HINHNHO\SP20\" />
-    <Folder Include="Assets\images\HINHNHO\SP21\" />
-    <Folder Include="Assets\images\HINHNHO\SP23\" />
-    <Folder Include="Assets\images\HINHNHO\SP24\" />
-    <Folder Include="Assets\images\HINHNHO\SP25\" />
-    <Folder Include="Assets\images\HINHNHO\SP26\" />
-    <Folder Include="Assets\images\HINHNHO\SP27\" />
-    <Folder Include="Assets\images\HINHNHO\SP28\" />
-    <Folder Include="Assets\images\HINHNHO\SP29\" />
-    <Folder Include="Assets\images\HINHNHO\SP30\" />
-    <Folder Include="Assets\images\HINHNHO\SP31\" />
-    <Folder Include="Assets\images\HINHNHO\SP32\" />
-    <Folder Include="Assets\images\HINHNHO\SP34\" />
-    <Folder Include="Assets\images\HINHNHO\SP35\" />
-    <Folder Include="Assets\images\HINHNHO\SP36\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -1041,6 +1015,10 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EF6\EF6.csproj">
+      <Project>{F33EEF4A-8634-4BA5-A0E7-BAE61C9115B0}</Project>
+      <Name>EF6</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ShopWatch.BussinessLogicLayer\ShopWatch.BussinessLogicLayer.csproj">
       <Project>{c901ef0b-2356-4c62-9219-700bab407b25}</Project>
       <Name>ShopWatch.BussinessLogicLayer</Name>

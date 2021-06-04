@@ -12,14 +12,14 @@
 <form class="row form-horizontal" action="/Order/Checkout" method="post" role="form">
 	<div class="col-md-6 mb-3">
 		<div class="form-group">
-			<label asp-for="PhoneNumber">Phone Number:</label>
+			<label asp-for="PhoneNumber">Số điện thoại:</label>
 			<input name="PhoneNumber" type="tel" class="form-control" id="phoneNumber" placeholder="0123456789" value="@Model.PhoneNumber" required>
 		</div>
 	</div>
 
 	<div class="col-md-6 mb-3">
 		<div class="form-group">
-			<label for="address">Address:</label>
+			<label for="address">Địa chỉ:</label>
 			<input type="text" class="form-control" name="ShipAddress" id="ShipAddress" placeholder="1234 Main St" value="@Model.ShipAddress" required>
 			<span class="text-danger" asp-validation-for="ShipAddress"></span>
 		</div>

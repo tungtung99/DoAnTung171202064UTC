@@ -1,4 +1,5 @@
-﻿using ShopWatch.BussinessLogicLayer.IService;
+﻿using ShopWatch.BussinessLogicLayer;
+using ShopWatch.BussinessLogicLayer.IService;
 using ShopWatch.BussinessLogicLayer.Services;
 using ShopWatch.Model;
 using ShopWatch.Model.DataContext;
@@ -6,6 +7,7 @@ using ShopWatch.WebMvc.Models;
 using ShopWatch.WebMvc.ViewModels;
 using ShopWatch.WebMvc.ViewModels.Customer;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
@@ -74,8 +76,10 @@ namespace ShopWatch.WebMvc.Controllers
 
 		public ActionResult Logout()
 		{
-			Session["UserSession"] = null;
-			return Redirect("/");
+			Session["UserSession"] = null;;
+            Session[ConstantCommon.Cart] = new List<ShoppingCartItem>();
+
+            return Redirect("/");
 		}
 
 		[HttpGet]
