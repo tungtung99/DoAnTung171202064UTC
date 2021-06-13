@@ -1,4 +1,5 @@
-﻿using ShopWatch.BussinessLogicLayer;
+﻿using EF6.EF;
+using ShopWatch.BussinessLogicLayer;
 using ShopWatch.BussinessLogicLayer.IService;
 using ShopWatch.BussinessLogicLayer.Services;
 using ShopWatch.Model;
@@ -18,9 +19,11 @@ namespace ShopWatch.WebMvc.Controllers
 	{
 
 		private readonly IAccountService _accountService;
-		private readonly ShopWatchDataContext _context;
+        private readonly DbDoAnContect db1 = new DbDoAnContect();
+        private readonly ShopWatchDataContext _context;
+        private ShopWatchDataContext db = new ShopWatchDataContext();
 
-		public AccountController(IAccountService accountService, ShopWatchDataContext context)
+        public AccountController(IAccountService accountService, ShopWatchDataContext context)
 		{
 			_accountService = accountService;
 			_context = context;
@@ -52,7 +55,26 @@ namespace ShopWatch.WebMvc.Controllers
 					userSession.AccountId = user.AccountId;
 					userSession.AccountRoleId = user.AccountRoleId;
 					Session.Add("UserSession", userSession);
-					return Redirect("/");
+                    var session = (UserLogin)Session["UserSession"];
+                    int id = session.AccountId;
+                    var lstCart = db1.Carts.Where(c => c.UserId == id).ToList();
+                    var lstShopCartItem = new List<ShoppingCartItem>();
+                    foreach (var item in lstCart)
+                    {
+                        int watchId = item.WatchId;
+                        var recordWatch = db.Watches.Where(w => w.WatchId == watchId).FirstOrDefault();
+                        ShoppingCartItem cartItem = new ShoppingCartItem();
+                        cartItem.WatchId = recordWatch.WatchId;
+                        cartItem.Quantity = item.Quantity;
+                        cartItem.Price = recordWatch.Price;
+                        cartItem.WatchId = recordWatch.WatchId;
+                        cartItem.Watch = recordWatch;
+                        lstShopCartItem.Add(cartItem);
+                    }
+                    Session[ConstantCommon.Cart] = null;
+                    Session[ConstantCommon.Cart] = lstShopCartItem;
+
+                    return Redirect("/");
 				}
 				else if (result == 0)
 				{
@@ -134,7 +156,7 @@ namespace ShopWatch.WebMvc.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Detail(User user)
+		public ActionResult Detail(ShopWatch.Model.User user)
 		{
 
 			return View(user);
