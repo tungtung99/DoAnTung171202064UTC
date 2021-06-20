@@ -89,6 +89,47 @@
     .active1, .dot:hover {
         background-color: #717171;
     }
+    .card-evaluate {
+        border: 1px solid rgba(0,0,0,.125);
+        border-radius: 4px;
+        box-shadow: 0 0 1px rgba(0 0 0 0.13), 0 1px 3px rgb(0 0 0 0.20);
+        padding: 0.25rem;
+    }
+
+        .card-evaluate .card-content {
+            margin: 0;
+            padding: 0;
+        }
+
+    .comment-icon-bought {
+        color: green;
+        margin-left: 20px;
+        margin-right: 5px;
+    }
+
+    .card-evaluate .comment {
+        margin-left: 8px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #f1f1f1;
+        text-decoration: none;
+    }
+
+        .card-evaluate .comment .comment-top p {
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .card-evaluate .comment .comment-name {
+            font-weight: bold;
+        }
+
+        .card-evaluate .comment .comment-rate {
+            color: gold;
+            margin-bottom: 5px;
+            display;
+            flex;
+            flex-direction: row;
+        }
 </style>
 <script src="~/Assets/js/jquery-3.3.1.slim.js"></script>
 <script src="~/Assets/js/slick.min.js"></script>
@@ -187,7 +228,83 @@
                 <hr />
                 <h3>Đánh giá</h3>
                 <p class="description">@Model.Evaluate</p>
+                <div class="card-evaluate">
+                    <div><h3>Đánh giá</h3></div>
+                    <div class="card-content">
 
+                        <div class="comment">
+                            <div class="comment-top">
+                                <p class="comment-name">Trần Duyên</p>
+                                <p><i class="comment-icon-bought fas fa-check-circle"></i>Đã mua tại DMX</p>
+                            </div>
+                            <div class="comment-rate">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div comment-rate>
+                                <p>Iphone 12 Pro Max của mình không tắt được tính năng chờ cuộc gọi, liên hệ Viettel mấy ngày rồi vẫn chưa hỗ trợ được. Phần mềm đang ở 14.5.1 (là mới nhất), đang dùng esim Viettel; Không biết thegioididong có thủ thuật gì không giúp mình với? Hiện tại rất bất tiện vì đang thực hiện cuộc gọi khác mà vẫn kết nối cuộc gọi khác nên bị ý kiến là thường xuyên không nghe điện thoại vì vẫn</p>
+                            </div>
+                        </div>
+                        <div class="comment">
+                            <div class="comment-top">
+                                <p class="comment-name">Hồ Đức thắng</p>
+                                <p><i class="fas fa-check-circle"></i>Đã mua tại DMX</p>
+                            </div>
+                            <div class="comment-rate">                                
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>                                
+                            </div>
+                            <div comment-rate>
+                                <p>Iphone 12 Pro Max của mình không tắt được tính năng chờ cuộc gọi</p>
+                            </div>
+                        </div>
+                        <div class="comment">
+                            <div class="comment-top">
+                                <p class="comment-name">Văn Hảo</p>
+                                <p><i></i>Đã mua tại DMX</p>
+                            </div>
+                            <div class="comment-rate">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div comment-rate>
+                                <p>Iphone 12 Pro Max của mình không tắt được tính năng chờ cuộc gọi, liên hệ Viettel mấy ngày rồi vẫn chưa hỗ trợ được. Phần mềm đang ở 14.5.1 (là mới nhất), đang dùng esim Viettel; Không biết thegioididong có thủ thuật gì không giúp mình với? Hiện tại rất bất tiện vì đang thực hiện cuộc gọi khác mà vẫn kết nối cuộc gọi khác nên bị ý kiến là thường xuyên không nghe điện thoại vì vẫn</p>
+                            </div>
+                        </div>
+                        <div class="comment">
+                            <div class="comment-top">
+                                <p class="comment-name">Vi Hùng</p>
+                                <p><i></i>Đã mua tại DMX</p>
+                            </div>
+                            <div class="comment-rate">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div comment-rate>
+                                <p>Iphone 12 Pro Max của mình không tắt được tính năng chờ cuộc gọi, liên hệ Viettel mấy ngày rồi vẫn chưa hỗ trợ được. Phần mềm đang ở 14.5.1 (là mới nhất), đang dùng esim Viettel; Không biết thegioididong có thủ thuật gì không giúp mình với? Hiện tại rất bất tiện vì đang thực hiện cuộc gọi khác mà vẫn kết nối cuộc gọi khác nên bị ý kiến là thường xuyên không nghe điện thoại vì vẫn</p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="d-flex">
+                        <input class="form-control  mr-3">
+                        <button class="addtocart btn btn-outline-primary mr-3">Gửi</button>
+                    </div>
+
+                </div>
             </div>
         </div>
         <div class="col-md-6">

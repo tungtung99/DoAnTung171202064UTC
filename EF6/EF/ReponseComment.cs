@@ -21,6 +21,8 @@ namespace EF6.EF
 
         public int? CommentId { get; set; }
 
+        public DateTime? ModifyDate { get; set; }
+
         public virtual Comment Comment { get; set; }
     }
 }

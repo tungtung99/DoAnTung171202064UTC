@@ -1002,6 +1002,7 @@
     <Content Include="Views\Comments\Details.cshtml" />
     <Content Include="Views\Comments\Edit.cshtml" />
     <Content Include="Views\Comments\Index.cshtml" />
+    <Content Include="Views\Comments\Commentlist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1022,7 +1023,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EF6\EF6.csproj">
-      <Project>{F33EEF4A-8634-4BA5-A0E7-BAE61C9115B0}</Project>
+      <Project>{f33eef4a-8634-4ba5-a0e7-bae61c9115b0}</Project>
       <Name>EF6</Name>
     </ProjectReference>
     <ProjectReference Include="..\ShopWatch.BussinessLogicLayer\ShopWatch.BussinessLogicLayer.csproj">

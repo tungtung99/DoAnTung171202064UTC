@@ -7,12 +7,19 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EF6.EF;
+using ShopWatch.BussinessLogicLayer.IService;
 
 namespace ShopWatch.WebMvc.Controllers
 {
     public class CommentsController : Controller
     {
         private DbDoAnContect db = new DbDoAnContect();
+        private readonly ICommentService _commentService;
+
+        public CommentsController(ICommentService commentService)
+        {
+            this._commentService = commentService;
+        }
 
         // GET: Comments
         public ActionResult Index()
@@ -124,6 +131,10 @@ namespace ShopWatch.WebMvc.Controllers
             base.Dispose(disposing);
         }
 
-        //public ActionResult Conment ()
+        public ActionResult Commentlist(int id)
+        {
+            var commentList = this._commentService.GetAsync(filter: c =>c.AccountId == id, orderBy: c => c.OrderBy(x=>x.ModifyDate));
+            return PartialView(commentList);
+        }
     }
 }
