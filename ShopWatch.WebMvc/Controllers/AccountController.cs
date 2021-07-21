@@ -57,22 +57,29 @@ namespace ShopWatch.WebMvc.Controllers
 					Session.Add("UserSession", userSession);
                     var session = (UserLogin)Session["UserSession"];
                     int id = session.AccountId;
-                    var lstCart = db1.Carts.Where(c => c.UserId == id).ToList();
-                    var lstShopCartItem = new List<ShoppingCartItem>();
-                    foreach (var item in lstCart)
+                    try
                     {
-                        int watchId = item.WatchId;
-                        var recordWatch = db.Watches.Where(w => w.WatchId == watchId).FirstOrDefault();
-                        ShoppingCartItem cartItem = new ShoppingCartItem();
-                        cartItem.WatchId = recordWatch.WatchId;
-                        cartItem.Quantity = item.Quantity;
-                        cartItem.Price = recordWatch.Price;
-                        cartItem.WatchId = recordWatch.WatchId;
-                        cartItem.Watch = recordWatch;
-                        lstShopCartItem.Add(cartItem);
-                    }
-                    Session[ConstantCommon.Cart] = null;
-                    Session[ConstantCommon.Cart] = lstShopCartItem;
+						var lstCart = db1.Carts.Where(c => c.UserId == id).ToList();
+						var lstShopCartItem = new List<ShoppingCartItem>();
+						foreach (var item in lstCart)
+						{
+							int watchId = item.WatchId;
+							var recordWatch = db.Watches.Where(w => w.WatchId == watchId).FirstOrDefault();
+							ShoppingCartItem cartItem = new ShoppingCartItem();
+							cartItem.WatchId = recordWatch.WatchId;
+							cartItem.Quantity = item.Quantity;
+							cartItem.Price = recordWatch.Price;
+							cartItem.WatchId = recordWatch.WatchId;
+							cartItem.Watch = recordWatch;
+							lstShopCartItem.Add(cartItem);
+						}
+						Session[ConstantCommon.Cart] = null;
+						Session[ConstantCommon.Cart] = lstShopCartItem;
+					}
+                    catch(Exception ex)
+                    {
+						;
+                    }                   
 
                     return Redirect("/");
 				}

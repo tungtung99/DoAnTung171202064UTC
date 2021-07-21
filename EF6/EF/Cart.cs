@@ -1,4 +1,4 @@
-namespace EF6.EF
+﻿namespace EF6.EF
 {
     using System;
     using System.Collections.Generic;

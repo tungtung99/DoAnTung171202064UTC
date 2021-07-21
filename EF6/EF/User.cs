@@ -11,8 +11,8 @@ namespace EF6.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            Carts = new HashSet<Cart>();
             Orders = new HashSet<Order>();
+            Carts = new HashSet<Cart>();
         }
 
         public int UserId { get; set; }
@@ -45,9 +45,9 @@ namespace EF6.EF
         public virtual Account Account { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cart> Carts { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Cart> Carts { get; set; }
     }
 }
