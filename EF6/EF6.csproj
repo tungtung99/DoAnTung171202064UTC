@@ -62,11 +62,10 @@
     <Compile Include="EF\OrderDetail.cs" />
     <Compile Include="EF\Promotion.cs" />
     <Compile Include="EF\Publisher.cs" />
-    <Compile Include="EF\ReponseComment.cs" />
-    <Compile Include="EF\sysdiagram.cs" />
     <Compile Include="EF\User.cs" />
     <Compile Include="EF\Watch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\CommentViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -82,6 +82,8 @@ namespace ShopWatch.WebMvc
 
             container.RegisterType<IGenericRepository<Promotion>, GenericRepository<Promotion>>();
             container.RegisterType<IPromotionService, PromotionService>();
+
+            container.RegisterType<ICommentService, CommentService>();
         }
     }
 }

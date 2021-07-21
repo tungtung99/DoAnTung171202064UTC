@@ -201,6 +201,7 @@
     <Compile Include="Areas\Admin\Controllers\WatchPromotionManagementController.cs" />
     <Compile Include="Areas\Admin\ViewModel\DashboardViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
@@ -244,6 +245,9 @@
     <Content Include="Assets\images\logo.jpg" />
     <Content Include="Assets\js\slick.css" />
     <Content Include="Assets\js\slick.min.js" />
+    <Content Include="Assets\js\toastr\toastr.css" />
+    <Content Include="Assets\js\toastr\toastr.min.css" />
+    <Content Include="Assets\js\toastr\toastr.min.js" />
     <Content Include="Scripts\js\410ba3b69f.js" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Areas\Admin\Js\order.js" />
@@ -857,6 +861,7 @@
     <Content Include="Assets\js\umd\popper-utils.min.js.map" />
     <Content Include="Assets\js\umd\popper.js.map" />
     <Content Include="Assets\js\umd\popper.min.js.map" />
+    <Content Include="Assets\js\toastr\toastr.js.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -996,6 +1001,12 @@
     <Content Include="Views\PurchaseOrder\Index.cshtml" />
     <Content Include="Views\PurchaseOrder\Detail.cshtml" />
     <Content Include="Views\Shared\_WatchOverview1.cshtml" />
+    <Content Include="Views\Comments\Create.cshtml" />
+    <Content Include="Views\Comments\Delete.cshtml" />
+    <Content Include="Views\Comments\Details.cshtml" />
+    <Content Include="Views\Comments\Edit.cshtml" />
+    <Content Include="Views\Comments\Index.cshtml" />
+    <Content Include="Views\Comments\Commentlist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,7 +1,11 @@
 ﻿@using System.Globalization
+@using ShopWatch.WebMvc.Models
 @model ShopWatch.Model.Watch
 
-@{ ViewData["Title"] = $"{Model.WatchName}"; }
+@{
+    ViewData["Title"] = $"{Model.WatchName}";
+    var session = (UserLogin)Session["UserSession"];
+}
 
 <style>
     * {
@@ -89,14 +93,139 @@
     .active1, .dot:hover {
         background-color: #717171;
     }
+
+    .card-evaluate {
+        border: 1px solid rgba(0,0,0,.125);
+        border-radius: 4px;
+        box-shadow: 0 0 1px rgba(0 0 0 0.13), 0 1px 3px rgb(0 0 0 0.20);
+        padding: 0.25rem;
+    }
+
+        .card-evaluate .card-content {
+            margin: 0;
+            padding: 0;
+        }
+
+    .comment-icon-bought {
+        color: green;
+        margin-left: 20px;
+        margin-right: 5px;
+    }
+
+    .card-evaluate .comment {
+        margin-left: 8px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #f1f1f1;
+        text-decoration: none;
+    }
+
+        .card-evaluate .comment .comment-top {
+            display: flex;
+            justify-content: space-between;
+        }
+
+            .card-evaluate .comment .comment-top p {
+                display: inline-block;
+                margin-bottom: 5px;
+            }
+
+        .card-evaluate .comment .comment-name {
+            font-weight: bold;
+        }
+
+        .card-evaluate .comment .comment-rate {
+            color: gold;
+            margin-bottom: 5px;
+            display;
+            flex;
+            flex-direction: row;
+        }
+
+    .card-evaluate .ff-btn-add {
+        background-color: cornflowerblue !important;
+        color: white !important;
+        margin-top: 10px;
+    }
+
+    .rate-comment-group {
+        margin-left: 0;
+    }
+
+        .rate-comment-group .start {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .rate-comment-group p {
+            width: 50px;
+            text-align: center;
+        }
+
+        .rate-comment-group i {
+            cursor: pointer;
+            color: gold;
+        }
+</style>
+<style>
+    .comment-like {
+        cursor: pointer;
+        color: dodgerblue;
+    }
+
+    .comment-reponse {
+        margin-left: 24px;
+        cursor: pointer;
+    }
+
+    .form-comment-top {
+        width: 50px;
+        justify-content: space-around;
+        display: none;
+    }
+
+    .comment-hover .form-comment-top {
+        display: flex !important;
+    }
+
+    .form-comment-top button {
+        border-radius: 50%;
+        border: 0px hidden;
+        cursor: pointer;
+        background-color: transparent;
+        outline: 0;
+    }
+
+        .form-comment-top button:hover {
+            background-color: #cccccc;
+        }
+
+    .form-comment-top .fa-trash {
+        color: red;
+    }
+
+    .comment-like-group {
+        margin-left: 5px;
+        font-style: italic;
+    }
 </style>
 <script src="~/Assets/js/jquery-3.3.1.slim.js"></script>
 <script src="~/Assets/js/slick.min.js"></script>
 <link href="~/Assets/js/slick.css" rel="stylesheet" />
+<link rel="stylesheet" href="/Assets/js/toastr/toastr.min.css">
 <script>
     $('.slideshow-container div').slick()
 </script>
-<div class="container product-container">
+@{
+    var AccountId = 0;
+    if (session != null)
+    {
+        AccountId = session.AccountId;
+    }
+
+}
+<div class="container product-container" data-id="@AccountId">
     <div class="row product-summary">
         <div class="col-md-4" style="border: 2px solid black; border-radius: 5px;">
             <div class="slideshow-container">
@@ -153,8 +282,8 @@
                         </div>
                     </div>
                 </div>
-                
-                
+
+
             </div>
         </div>
     </div>
@@ -187,7 +316,9 @@
                 <hr />
                 <h3>Đánh giá</h3>
                 <p class="description">@Model.Evaluate</p>
-
+                <div id="partialComment">
+                    @Html.Action("Commentlist", "Comments", new { watchId = @Model.WatchId, page = 1 })
+                </div>               
             </div>
         </div>
         <div class="col-md-6">
@@ -243,7 +374,278 @@
             dots[slideIndex - 1].className += " active1";
         }
     </script>
+    <script src="~/Assets/js/toastr/toastr.min.js"></script>
+    <script>
+        class Comment {
+            rate;
+            text;
+            accountId;
+            commentId;
+            watchId;
+            page;
+            pagesize;
+            pageTotal;
+            constructor(rate = 0) {
+                this.rate = rate;
+                this.accountId = Number($('.product-container').attr("data-id"));
+                this.watchId = Number($('.card-evaluate').attr('data-watchId'));
+            }
 
+            creteEmptyStart() {
+                $(".start").each(function () {
+                    $(this).find(".fas").css("display", "none");
+                    $(this).find(".far").css("display", "block");
+                });
+            }
+            timeSince(date) {
+                var seconds = Math.floor((new Date() - date) / 1000);
+                var interval = seconds / 31536000;
+                if (interval > 1) {
+                    return Math.floor(interval) + " years";
+                }
+                interval = seconds / 2592000;
+                if (interval > 1) {
+                    return Math.floor(interval) + " months";
+                }
+                interval = seconds / 86400;
+                if (interval > 1) {
+                    return Math.floor(interval) + " days";
+                }
+                interval = seconds / 3600;
+                if (interval > 1) {
+                    return Math.floor(interval) + " hours";
+                }
+                interval = seconds / 60;
+                if (interval > 1) {
+                    return Math.floor(interval) + " minutes";
+                }
+                return Math.floor(seconds) + " seconds";
+            }
+         }
+
+        $(document).ready(() => {
+            var comment = new Comment();
+            comment.creteEmptyStart();
+            // sự kiện ấn like
+            $(".templete-like").delegate(".comment-like", "click", function () {
+                if ($(".card-evaluate").data("session") == "") {
+                    var confirm = window.confirm("Đăng nhập để có thể bình luận");
+                    if (confirm) {
+                        window.location.href = "/Account/Login";
+                        return;
+                    }
+                    else {
+                        return;
+                    }
+                }
+                var isLike = $(this).data("id");
+                var templateLike = $(this).closest(".comment").find('.templete-like');
+                var commentId = $(this).closest(".comment").data('id');
+                var watchId = $('.card-evaluate').data('watchId');
+                $.ajax({
+                    url: '/Comments/setLikeItem',
+                    data: { 'isLike': isLike, 'commentId': commentId },
+                    dataType: 'json',
+                    type: "POST",
+                }).done(function (res) {
+                    templateLike.empty();
+                    if (!res.like) {
+                        templateLike.append(`<div class="comment-like" data-id="false">
+                                                                <i class="far fa-thumbs-up"></i> Hữu ích
+                                                            </div><div class="comment-like-group">${res.countLike}</div>`);
+                    }
+                    else {
+                        templateLike.append(`<div class="comment-like" data-id="true">
+                                                                <i class="fas fa-thumbs-up"></i> Không hữu ích
+                                                            </div><div class="comment-like-group">${res.countLike}</div>`);
+
+                    }
+                }).fail(function (xhr, a, error) {
+                    console.log(error);
+                });
+
+            })
+
+            $("#createModal").on('mouseover', '.start i', function () {
+                var rate = $(this).closest(".start").data('id');
+
+                $(".start").each(function () {
+                    var rateItem = $(this).data('id');
+                    if (rateItem > rate) {
+                        $(this).find(".fas").css("display", "none");
+                        $(this).find(".far").css("display", "block");
+                    }
+                    else {
+                        $(this).find(".far").css("display", "none");
+                        $(this).find(".fas").css("display", "block");
+                    }
+                });
+            });
+
+            $("#createModal").on('mouseout', '.start', function () {
+                $(".start").each(function () {
+                    var rateItem = $(this).data('id');
+                    if (rateItem <= comment.rate) {
+                        $(this).find(".far").css("display", "none");
+                        $(this).find(".fas").css("display", "block");
+                    }
+                    else {
+                        $(this).find(".fas").css("display", "none");
+                        $(this).find(".far").css("display", "block");
+
+                    }
+
+                });
+            });
+            $('#createModal .start').on('click', function () {
+                var rate = $(this).data('id');
+                comment.rate = Number(rate);
+            });
+
+
+            // sự kiện lưu form
+            $('button[name="SubmitCreateComment"]').on('click', function () {
+                if ($(".card-evaluate").data("session") == "") {
+                    var confirm = window.confirm("Đăng nhập để có thể bình luận");
+                    if (confirm) {
+                        window.location.href = "/Account/Login";
+                        return;
+                    }
+                    else {
+                        return;
+                    }
+                }
+                var commentText = $('textarea[name="commentText"]').val();
+                var watchId = $('.card-evaluate').attr('data-watchId');
+                var model = {};
+                model.Rate = comment.rate;
+                model.Text = commentText;
+                model.watchId = watchId;
+                $.ajax({
+                    url: '/Comments/Create',
+                    data: { comment: model },
+                    dataType: 'json',
+                    type: "POST",
+                }).done(function (res) {
+                    if (res) {
+                        toastr.success('Thêm binh thành công');
+                        $('#myModal').modal('hide');
+                        location.reload();
+                    }
+                    else {
+                        toastr.error('Không thể thêm bình luận');
+                        $('#myModal').modal('hide');
+                    }
+                }).fail(function (xhr, a, error) {
+                    console.log(error);
+                });
+            });
+
+
+            //sự kiện hover
+            $(".comment").hover(function () {
+                var accountId = Number($('.product-container').data('id'));
+                var accountIdComment = Number($(this).attr("data-accountId"));
+                if (accountId == accountIdComment) {
+                    $(this).addClass("comment-hover");
+                }
+            },
+                function () {
+                    $(this).removeClass("comment-hover");
+                });
+
+            //sự kiện mở form edit
+            $(".openFormEdit").click(function () {
+                $('#editModal').modal('show');
+                var itemComment = $(this).closest(".comment");
+                var commentId = $(this).data("id");
+                comment.commentId = commentId;
+                $('#editModal').attr("data-commentId", commentId);
+                var text = itemComment.find(".comment-text").attr("data-text").toString();
+                var rate = Number(itemComment.find(".comment-rate").attr("data-rate"));
+                $("#editModal #commentText").val(text);
+                for (let i = 1; i <= 5; i++) {
+                    var item = `#editModal .start-${i}`;
+                    if (i <= rate) {
+                        $(item).find(".fas").css("display", "block");
+                        $(item).find(".far").css("display", "none");
+                    }
+                    else {
+                        $(item).find(".fas").css("display", "none");
+                        $(item).find(".far").css("display", "block");
+                    }
+                }
+
+            })
+
+            //sự kiện đóng form
+            $('.closeForm').click(function () {
+                $(this).closest(".modal").modal("hide");
+            });
+
+            //sự kiện lưu form edit
+            $('button[name="SubmitEditComment"]').on('click', function () {
+                var item = $('#editModal');
+                var textComment = $(item).find('[name="commentText"]').val();
+                var commentId = $(this).closest(".comment").data('id');
+                var model = {};
+                model.CommentId = comment.commentId;
+                model.Rate = comment.rate;
+                model.Text = textComment;
+                model.WatchId = comment.watchId;
+                model.AccountId = comment.accountId;
+                $.ajax({
+                    url: '/Comments/Edit',
+                    data: { comment: model },
+                    dataType: 'json',
+                    type: "POST",
+                }).done(function (res) {
+                    if (res.status) {
+                        var template = `.comment[data-id="${comment.commentId}"]`;
+                        $(template).find(".comment-text").text(res.text);
+                        $(template).find(".comment-text").attr("data-text", res.text);
+                        var modifyDate = new Date(JSON.parse(res.modifyDate));
+                        var timeSince = comment.timeSince(modifyDate);
+                        $(template).find(".comment-modifyDate p").text(timeSince);
+                    }
+                    $('#editModal').modal('hide');
+
+
+
+                }).fail(function (xhr, a, error) {
+                    console.log(error);
+                });
+            })
+
+            //sự kiện mở popup xóa
+            $(".deleteComment").click(function () {
+                $('#confirmDeleteModal').modal('show');              
+                var commentId = $(this).data("id");
+                comment.commentId = commentId;   
+            })
+
+            //sự kiện xóa bình luận
+            $('button[name="SubmitDeleteComment"]').on('click', function () {                
+                $.ajax({
+                    url: '/Comments/DeleteConfirmed',
+                    data: { id: comment.commentId },
+                    dataType: 'json',
+                    type: "POST",
+                }).done(function (res) {
+                    $('#confirmDeleteModal').modal('hide');
+                    if (res.status) {
+                        var template = `.comment[data-id="${comment.commentId}"]`;
+                        $(template).remove();                      
+                    }   
+                }).fail(function (xhr, a, error) {
+                    console.log(error);
+                });
+
+            })
+
+
+        });
+    </script>
 }
 
 

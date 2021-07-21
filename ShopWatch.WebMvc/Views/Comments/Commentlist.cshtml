@@ -1,0 +1,313 @@
+﻿@using ShopWatch.BussinessLogicLayer
+@using ShopWatch.WebMvc.Models
+@model PaginatedList<EF6.ViewModel.CommentViewModel>
+
+@{
+    var session = (UserLogin)Session["UserSession"];
+}
+
+<!-- Create Modal -->
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Bình luận</h5>
+                <button type="button" class="close closeForm" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body">
+                    <div class="form-group">
+                        <textarea rows="5" class="form-control" id=".comment" placeholder="Nhập nội dung bình luận" name="commentText"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Bạn cảm thấy như thế nào?</label>
+                        <div class="row rate-comment-group">
+                            <div class="start start-1" data-id="1">
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <p>Rất tệ</p>
+                            </div>
+                            <div class="start start-2" data-id="2">
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <p>Tệ</p>
+                            </div>
+                            <div class="start start-3" data-id="3">
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <p>Bình thường</p>
+                            </div>
+                            <div class="start start-4" data-id="4">
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <p>Tốt</p>
+                            </div>
+                            <div class="start start-5" data-id="5">
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <p>Rất tốt</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default closeForm" data-dismiss="modal">Close</button>
+                <button name="SubmitCreateComment" class="btn btn-primary"> Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /. Create Modal -->
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Bình luận</h5>
+                <button type="button" class="close closeForm" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body">
+                    <div class="form-group">
+                        <textarea rows="5" class="form-control" id="commentText" placeholder="Nhập nội dung bình luận" name="commentText"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Bạn cảm thấy như thế nào?</label>
+                        <div class="row rate-comment-group">
+                            <div class="start start-1" data-id="1">
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <p>Rất tệ</p>
+                            </div>
+                            <div class="start start-2" data-id="2">
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <p>Tệ</p>
+                            </div>
+                            <div class="start start-3" data-id="3">
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <p>Bình thường</p>
+                            </div>
+                            <div class="start start-4" data-id="4">
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <p>Tốt</p>
+                            </div>
+                            <div class="start start-5" data-id="5">
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <p>Rất tốt</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default closeForm" data-dismiss="modal">Close</button>
+                <button name="SubmitEditComment" class="btn btn-primary"> Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /. edit Modal -->
+<!-- /. delete Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title w-100 text-center" id="exampleModalCenterTitle">Bạn có muốn xóa comment này?</h5>
+                <button type="button" class="close closeForm" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body d-flex flex-row-reverse">
+                <div class="m-1">
+                    <button type="submit" id="confirmDel" name="SubmitDeleteComment" class="btn btn-primary">Đồng ý</button>
+                </div>
+                <div class="m-1">
+                    <button type="submit" class="btn btn-default closeForm" data-dismiss="modal" >Hủy</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="card-evaluate" data-watchId="@ViewBag.watchId" data-session="@session">
+    <div><h3>Bình luận</h3></div>
+    <div class="card-content">
+        @foreach (var item in Model)
+        {
+            <div class="comment" data-id="@item.CommentId" data-accountId="@item.AccountId">
+                <div class="comment-top">
+
+                    <p class="comment-name">
+                        @item.AccountName
+                    </p>
+                    @if (item.IsBuy)
+                    {
+                        <p><i class="comment-icon-bought fas fa-check-circle"></i>Đã mua tại DMX</p>
+                    }
+
+                    <div class="form-comment-top">
+                        <button class="editComment openFormEdit" data-id="@item.CommentId">
+                            <i class="fas fa-edit" aria-hidden="true"></i>
+                        </button>
+                        <button class="deleteComment" data-id="@item.CommentId">
+                            <i class="fas fa-trash" aria-hidden="true"></i>
+                        </button>
+
+                    </div>
+                </div>
+                <div class="comment-rate" data-rate="@item.Rate">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        if (i <= (int)@item.Rate)
+                        {
+                            <i class="fas fa-star star-@i" style="display: inline-block"></i>
+                            <i class="far fa-star star-@i" style="display: none"></i>
+                        }
+                        else
+                        {
+                            <i class="fas fa-star star-@i" style="display: none"></i>
+                            <i class="far fa-star star-@i" style="display: inline-block"></i>
+                        }
+                    }
+
+
+
+                </div>
+                <div class="comment-text" data-text="@item.Text">
+                    <p>@item.Text</p>
+                </div>
+                <div class="comment-modifyDate">
+                    @{
+                        var timeLength = "";
+                        DateTime modifyDate;
+                        if (item.ModifyDate != null)
+                        {
+                            modifyDate = (DateTime)item.ModifyDate;
+                        }
+                        else
+                        {
+                            modifyDate = DateTime.Now;
+                        }
+
+                        const int SECOND = 1;
+                        const int MINUTE = 60 * SECOND;
+                        const int HOUR = 60 * MINUTE;
+                        const int DAY = 24 * HOUR;
+                        const int MONTH = 30 * DAY;
+
+                        var ts = new TimeSpan(DateTime.Now.Ticks - modifyDate.Ticks);
+                        double delta = Math.Abs(ts.TotalSeconds);
+
+                        if (delta < 1 * MINUTE)
+                        {
+                            timeLength = ts.Seconds == 1 ? "one second ago" : ts.Seconds + " seconds ago";
+                        }
+                        else if (delta < 2 * MINUTE)
+                        {
+                            timeLength = "a minute ago";
+                        }
+                        else if (delta < 45 * MINUTE)
+                        {
+                            timeLength = ts.Minutes + " minutes ago";
+                        }
+                        else if (delta < 90 * MINUTE)
+                        {
+                            timeLength = "an hour ago";
+                        }
+                        else if (delta < 24 * HOUR)
+                        {
+                            timeLength = ts.Hours + " hours ago";
+                        }
+                        else if (delta < 48 * HOUR)
+                        {
+                            timeLength = "yesterday";
+                        }
+                        else if (delta < 30 * DAY)
+                        {
+                            timeLength = ts.Days + " days ago";
+                        }
+                        else if (delta < 12 * MONTH)
+                        {
+                            int months = Convert.ToInt32(Math.Floor((double)ts.Days / 30));
+                            timeLength = months <= 1 ? "one month ago" : months + " months ago";
+                        }
+                        else
+                        {
+                            int years = Convert.ToInt32(Math.Floor((double)ts.Days / 365));
+                            timeLength = years <= 1 ? "one year ago" : years + " years ago";
+                        }
+
+                    }
+                    <p>@timeLength</p>
+                </div>
+                <div class="d-flex flex-row templete-like">
+                    @{ List<string> likeList = string.IsNullOrEmpty(item.Likes) ? new List<string>() : item.Likes.Split(',').ToList();
+                    }
+                    @if (@session != null)
+                    {
+                        if (!likeList.Contains(@session.AccountId.ToString()))
+                        {
+                            <div class="comment-like" data-id="false">
+                                <i class="far fa-thumbs-up"></i> Hữu ích <i></i>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="comment-like" data-id="true">
+                                <i class="fas fa-thumbs-up"></i> Không hữu ích
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="comment-like" data-id="false">
+                            <i class="far fa-thumbs-up"></i> Hữu ích <i></i>
+                        </div>
+                    }
+                    <div class="comment-like-group">
+                        @{
+                            var lengthLike = string.IsNullOrEmpty(item.Likes) ? 0 : item.Likes.Split(',').Length;
+                        }
+                        @lengthLike
+                    </div>
+                   
+                </div>
+            </div>
+        }
+
+
+    </div>
+    <div class="d-flex">
+        <input class="form-control  mr-3">
+        <button class="addtocart btn btn-outline-primary mr-3">Gửi</button>
+    </div>
+    <button type="button" class="btn ff-btn-add" id="bt_createCustomer" data-toggle="modal" data-target="#createModal">
+        <i class="fa fa-plus-square"></i> &nbsp;
+        Thêm mới
+    </button>
+
+</div>
+
+
+
+@section Scripts{
+    <script>
+        alert("load partital list");
+    </script>
+}
