@@ -25,20 +25,20 @@ namespace ShopWatch.WebMvc.Controllers
         {
             var lstShopCartItem = new List<ShoppingCartItem>();
             var session = (UserLogin)Session["UserSession"];
-            if(session != null)
+            if (session != null)
             {
 
                 int id = session.AccountId;
                 var lstCart = db1.Carts.Where(c => c.UserId == id).ToList();
                 //var lstWatch = new List<ShopWatch.Model.Watch>();
-                foreach(var item in lstCart)
+                foreach (var item in lstCart)
                 {
                     int watchId = item.WatchId;
                     var recordWatch = db.Watches.Where(w => w.WatchId == watchId).FirstOrDefault();
                     ShoppingCartItem cartItem = new ShoppingCartItem();
                     cartItem.WatchId = recordWatch.WatchId;
                     cartItem.Quantity = item.Quantity;
-                    cartItem.Price = recordWatch.Price;
+                    cartItem.Price = recordWatch.PricePromotion != 0 ? recordWatch.PricePromotion : recordWatch.Price;
                     cartItem.WatchId = recordWatch.WatchId;
                     cartItem.Watch = recordWatch;
                     lstShopCartItem.Add(cartItem);
@@ -130,10 +130,10 @@ namespace ShopWatch.WebMvc.Controllers
             var delete = db1.Carts.Where(c => c.UserId == idUser).ToList();
             db1.Carts.RemoveRange(delete);
             db1.SaveChanges();
-            foreach(var item in cart)
+            foreach (var item in cart)
             {
                 var checkAdd = db1.Carts.Where(c => c.UserId == idUser && c.WatchId == item.WatchId).FirstOrDefault();
-                if(checkAdd == null)
+                if (checkAdd == null)
                 {
                     Cart cart1 = new Cart();
                     cart1.Quantity = item.Quantity;

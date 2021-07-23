@@ -16,13 +16,14 @@ namespace ShopWatch.WebMvc.Controllers
 		private const string CartSession = "CartSession";
 		private readonly IOrderService _orderService;
 		private readonly ICheckoutService _checkoutService;
-		private readonly ShopWatchDataContext _context = new ShopWatchDataContext();
+        private readonly ShopWatchDataContext _context;/* = new ShopWatchDataContext();*/
 
 
-		public OrderController(IOrderService orderService, ICheckoutService checkoutService)
+		public OrderController(IOrderService orderService, ICheckoutService checkoutService, ShopWatchDataContext context)
 		{
 			_orderService = orderService;
 			_checkoutService = checkoutService;
+            _context = context;
 		}
 
 		public ActionResult Checkout()
