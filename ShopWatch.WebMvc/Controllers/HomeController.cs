@@ -26,7 +26,7 @@ namespace ShopWatch.WebMvc.Controllers
             orderBy = b => b.OrderBy(s => s.Quantity);
             if (search==null || search=="")
 			{				
-                var watches = _watchServices.GetAsync(orderBy: orderBy, page: page ?? 1, pageSize: 10);
+                var watches = _watchServices.GetAsync(orderBy: orderBy, page: page ?? 1, pageSize: 12);
                 page = 1;
                 return View(watches);
 			}
@@ -34,7 +34,7 @@ namespace ShopWatch.WebMvc.Controllers
 			{				
                 Expression<Func<Watch, bool>> filter = null;
                 filter = a => a.WatchName.Contains(search);
-                var watches = _watchServices.GetAsync(filter: filter, orderBy: orderBy, page: page ?? 1, pageSize: 10);
+                var watches = _watchServices.GetAsync(filter: filter, orderBy: orderBy, page: page ?? 1, pageSize: 12);
                 return View(watches);
 				
 			}	
@@ -42,14 +42,14 @@ namespace ShopWatch.WebMvc.Controllers
 
 		public ActionResult About()
 		{
-			ViewBag.Message = "Your application description page.";
+			ViewBag.Message = "Trang mô tả ứng dụng của bạn.";
 
 			return View();
 		}
 
 		public ActionResult Contact()
 		{
-			ViewBag.Message = "Your contact page.";
+			ViewBag.Message = "Trang thông tin của bạn.";
 
 			return View();
 		}

@@ -60,7 +60,7 @@ namespace ShopWatch.WebMvc.Controllers
 			ViewBag.MessageUi = "";
 			if (cartItems.Count == 0)
 			{
-				ModelState.AddModelError("", "Giỏ hàng của bạn hiện trống không ah ^_^, chọn mua đồng hồ đi nhé!");
+				ModelState.AddModelError("", "Giỏ hàng của bạn hiện trống không, chọn mua đồng hồ đi nhé!");
 			}
 
 			if (ModelState.IsValid)
@@ -100,7 +100,7 @@ namespace ShopWatch.WebMvc.Controllers
 
 		public ActionResult CheckoutComplete()
 		{
-			ViewBag.CheckoutCompleteMessage = " Cảm ơn bạn đã đặt hàng, đơn hàng của bạn sẽ sớm được chuyển tới trong vòng 7 ngày ahihi ^_^, nếu đặt nhầm xin vui lòng hủy ngay giúp cửa hàng Hùng Tâm, xin cảm ơn!";
+			ViewBag.CheckoutCompleteMessage = " Cảm ơn bạn đã đặt hàng, đơn hàng của bạn sẽ sớm được chuyển tới trong vòng 7 ngày, Xin cảm ơn!";
 
 			return View();
 		}

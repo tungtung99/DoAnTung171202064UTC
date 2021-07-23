@@ -1,62 +1,70 @@
 ﻿@using ShopWatch.Model
 @model User
 @{
-	ViewBag.Title = "Detail";
-	Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2 class="text-center">Xin chào @Model.Name <.></h2>
 <form action="~/Account/Detail" method="post" class="row form-horizontal" role="form" enctype="multipart/form-data">
-	@Html.AntiForgeryToken()
-	<div class="col">
-		<div class="form-group">
-			@Html.LabelFor(m => m.Name, new { @class = "control-label" })
-			<div>
-				@Html.TextBoxFor(m => m.Name, new { @class = "form-control", autofocus = "autofocus", id = "name" })
-				@Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
-			</div>
-		</div>
-		<div class="form-group">
-			@Html.LabelFor(m => m.City, new { @class = "control-label" })
-			<div>
-				@Html.TextBoxFor(m => m.City, new { @class = "form-control", autofocus = "autofocus", id = "city" })
-				@Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
-			</div>
-		</div>
-		<div class="form-group">
-			@Html.LabelFor(m => m.Address, new { @class = "control-label" })
-			<div>
-				@Html.TextBoxFor(m => m.Address, new { @class = "form-control", autofocus = "autofocus", id = "address" })
-				@Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
-			</div>
-		</div>
-		
-	</div>
-	<div class="col">
-		<div class="form-group">
-			@Html.LabelFor(m => m.BirthDate, new { @class = "control-label" })
-			<div>
-				@Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control", type = "date", id = "birthdate" })
-				@Html.ValidationMessageFor(m => m.BirthDate, "", new { @class = "text-danger" })
-			</div>
-		</div>
-		<div class="form-group">
-			@Html.LabelFor(m => m.Email, new { @class = "control-label" })
-			<div>
-				@Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "mail", id = "email" })
-				@Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-			</div>
-		</div>
-		<div class="form-group">
-			@Html.LabelFor(m => m.Phone, new { @class = "control-label" })
-			<div>
-				@Html.TextBoxFor(m => m.Phone, new { @class = "form-control", id = "email" })
-				@Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
-			</div>
-		</div>
-	</div>
-	<div class="col-12 text-center">
-		<input type="submit" class="btn btn-danger" value="Chỉnh sửa" />
-		<a href="~/Home/Index" class="btn btn-secondary">Hủy</a>
-	</div>
+    @Html.AntiForgeryToken()
+    <div class="col">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+            <div>
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", autofocus = "autofocus", id = "name" })
+                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.City, new { @class = "control-label" })
+            <div>
+                @Html.TextBoxFor(m => m.City, new { @class = "form-control", autofocus = "autofocus", id = "city" })
+                @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Address, new { @class = "control-label" })
+            <div>
+                @Html.TextBoxFor(m => m.Address, new { @class = "form-control", autofocus = "autofocus", id = "address" })
+                @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    </div>
+    <div class="col">
+        <div class="form-group">
+            @Html.LabelFor(m => m.BirthDate, new { @class = "control-label" })
+            <div>
+                @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control", type = "datetime", id = "birthdate" })
+                @Html.ValidationMessageFor(m => m.BirthDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+            <div>
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "mail", id = "email" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Phone, new { @class = "control-label" })
+            <div>
+                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", id = "email" })
+                @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="col-12 text-center">
+        <input type="submit" class="btn btn-danger" value="Chỉnh sửa" />
+        <a href="~/Home/Index" class="btn btn-secondary">Hủy</a>
+    </div>
 </form>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var abc = $("#birthdate").val();
+        var lst = abc.split(' ')[0].split("/");
+        $("#birthdate").val(lst[1] + "/" + lst[0] + "/" + lst[2]);
+    });
+</script>
