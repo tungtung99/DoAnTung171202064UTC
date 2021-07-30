@@ -63,26 +63,96 @@ namespace ShopWatch.WebMvc.Controllers
 		public  ActionResult ListByPrice(decimal priceLevel)
 		{
 			IEnumerable<Watch> watches;
-			decimal currentPrice = decimal.Zero;
+            IEnumerable<Watch> watches1;
+            string currentPrice;
+            string currentPrice1;
 
-			if (priceLevel < 0)
+            if (priceLevel < 0)
 			{
 				watches = _watchServices.GetAsync(orderBy: b => b.OrderBy(x => x.WatchName), page: 1, pageSize: 100);
-				currentPrice = 0;
+				currentPrice = "";
 			}
 			else
 			{
-				watches = _watchServices.GetAsync(filter: b => b.Price < priceLevel, orderBy: b => b.OrderBy(x => x.WatchName), page: 1, pageSize: 100);
+                if(priceLevel == 1)
+                {
+                    watches = _watchServices.GetAsync(filter: b => b.Price >= 1000000 && b.Price < 5000000, orderBy: b => b.OrderBy(x => x.WatchName), page: 1, pageSize: 100);
 
-				currentPrice = priceLevel;
+                    currentPrice = 1000000.ToString("0,0,0") + "-" + 5000000.ToString("0,0,0");
+                    return View(new WatchListByPriceViewModel
+                    {
+                        Watches = watches,
+                        CurrentPrice = currentPrice
+                    });
+                } 
+                else if(priceLevel == 2)
+                {
+                    watches = _watchServices.GetAsync(filter: b => b.Price >= 5000000 && b.Price < 10000000, orderBy: b => b.OrderBy(x => x.WatchName), page: 1, pageSize: 100);
+
+                    currentPrice = 5000000.ToString("0,0,0") + "-" + 10000000.ToString("0,0,0");
+                    return View(new WatchListByPriceViewModel
+                    {
+                        Watches = watches,
+                        CurrentPrice = currentPrice
+                    });
+                }
+                else if(priceLevel == 3)
+                {
+                    watches = _watchServices.GetAsync(filter: b => b.Price >= 10000000 && b.Price < 20000000, orderBy: b => b.OrderBy(x => x.WatchName), page: 1, pageSize: 100);
+
+                    currentPrice = 10000000.ToString("0,0,0") +"-"+ 20000000.ToString("0,0,0");
+                    return View(new WatchListByPriceViewModel
+                    {
+                        Watches = watches,
+                        CurrentPrice = currentPrice
+                    });
+                }
+                else
+                {
+                    watches = _watchServices.GetAsync(filter: b => b.Price >= 20000000, orderBy: b => b.OrderBy(x => x.WatchName), page: 1, pageSize: 100);
+
+                    currentPrice = " > "+ 20000000.ToString("0,0,0");
+                    return View(new WatchListByPriceViewModel
+                    {
+                        Watches = watches,
+                        CurrentPrice = currentPrice
+                    });
+                }
+                /*switch (priceLevel)
+                {
+                    case 1:
+                        watches = _watchServices.GetAsync(filter: b => b.Price >= 1000000 && b.Price < 5000000, orderBy: b => b.OrderBy(x => x.WatchName), page: 1, pageSize: 100);
+
+                        currentPrice = "1000000 - 5000000";
+                        break;
+                    case 2:
+                        watches = _watchServices.GetAsync(filter: b => b.Price >= 5000000 && b.Price < 10000000, orderBy: b => b.OrderBy(x => x.WatchName), page: 1, pageSize: 100);
+
+                        currentPrice = priceLevel.ToString("0,0,0");
+                        break;
+                    case 3:
+                        watches = _watchServices.GetAsync(filter: b => b.Price >= 10000000 && b.Price < 20000000, orderBy: b => b.OrderBy(x => x.WatchName), page: 1, pageSize: 100);
+
+                        currentPrice = priceLevel.ToString("0,0,0");
+                        break;
+                    case 4:
+                        watches = _watchServices.GetAsync(filter: b => b.Price >= 20000000, orderBy: b => b.OrderBy(x => x.WatchName), page: 1, pageSize: 100);
+
+                        currentPrice = priceLevel.ToString("0,0,0");
+                        break;
+                }
+                watches1 = watches;*/
+
+				//currentPrice = priceLevel.ToString("0,0,0");
 			}
 
-			return View(new WatchListByPriceViewModel
-			{
-				Watches = watches,
-				CurrentPrice = currentPrice
-			});
-		}
+            return View(new WatchListByPriceViewModel
+            {
+                Watches = watches,
+                CurrentPrice = currentPrice
+            });
+
+        }
 		public ActionResult Details(int id)
 		{
 			var watch =  _watchServices.GetById(id);

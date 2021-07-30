@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ShopWatch.BussinessLogicLayer.IGennericRepository
 {
-	public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+	public class GenericRepository<TEntity> : IGenericRepository<TEntity>, IDisposable where TEntity : class
 	{
 		private ShopWatchDataContext _context;
 		private readonly DbSet<TEntity> _dbSet;
@@ -18,7 +18,7 @@ namespace ShopWatch.BussinessLogicLayer.IGennericRepository
 
 		
 		protected IDbFactory DbFactory { get; set; }
-		protected ShopWatchDataContext DbContext => _context ?? (_context = DbFactory.Init());
+		protected ShopWatchDataContext DbContext => _context ?? (_context = new ShopWatchDataContext());
 		public GenericRepository(IDbFactory dbFactory)
 		{
 			DbFactory = dbFactory;
@@ -122,6 +122,12 @@ namespace ShopWatch.BussinessLogicLayer.IGennericRepository
 		public virtual void Update(TEntity entity)
 		{
 			_dbSet.AddOrUpdate(entity);
+            _context.SaveChanges();
 		}
+
+        public void Dispose()
+        {
+            _context.Dispose();
+        }
     }
 }

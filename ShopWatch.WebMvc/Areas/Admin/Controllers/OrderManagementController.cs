@@ -66,7 +66,7 @@ namespace ShopWatch.WebMvc.Areas.Admin.Controllers
 					orderBy = b => b.OrderBy(s => s.CreatedDate);
 					break;
 			}
-			var orders = _orderService.GetAsync(filter: filter, orderBy: orderBy, page: page ?? 1, pageSize: 10);
+			var orders = _orderService.GetAsync(filter: filter, orderBy: orderBy, page: page ?? 1, pageSize: 12);
 			return View(orders);
 		}
 

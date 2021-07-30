@@ -6,6 +6,6 @@ namespace ShopWatch.WebMvc.ViewModels.Customer
 	public class WatchListByPriceViewModel
 	{
 		public IEnumerable<Watch> Watches { get; set; }
-		public decimal CurrentPrice { get; set; }
+		public string CurrentPrice { get; set; }
 	}
 }

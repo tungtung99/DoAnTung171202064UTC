@@ -5,6 +5,11 @@
 	ViewBag.Title = "Index";
 	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
+<style>
+    .managecolor {
+        color: #007bff;
+    }
+</style>
 <h2>Quản Lý Thương hiệu</h2>
 <hr />
 <div>
@@ -65,15 +70,15 @@ else
 
 	<table class="table table-condensed table-bordered">
 		<tr class="d-flex">
-			<th class="col-md-2">
+			<th class="col-md-2 text-center">
 				<a href="@Url.Action("Index", "PublisherManagement", new { sortOrder = ViewData["NameSortParm"], currentFilter = ViewData["CurrentFilter"] })">Tên thương hiệu</a>
 			</th>
-			<th class="col-md-4">Mô tả</th>
-			<th class="col-md-2">
+			<th class="col-md-4 text-center managecolor">Mô tả</th>
+			<th class="col-md-2 text-center">
 				<a href="@Url.Action("Index", "PublisherManagement", new { sortOrder = ViewData["TotalSortParm"], currentFilter = ViewData["CurrentFilter"] })">Tổng đồng hồ</a>
 			</th>
-			<th class="col-md-2">Ảnh</th>
-			<th class="col-md-2">Quản lý</th>
+			<th class="col-md-2 text-center managecolor">Ảnh</th>
+			<th class="col-md-2 text-center managecolor">Quản lý</th>
 		</tr>
 
 		@foreach (var publisher in Model)
@@ -91,7 +96,7 @@ else
 				<td class="col-md-2 text-center">
 					<img src="~/Assets/images/HINHTH/@publisher.Image" width="100%" height="100%" />
 				</td>
-				<td class="col-md-2">
+				<td class="col-md-2 text-center">
 					<form action="/Admin/PublisherManagement/DeletePublisher/@publisher.PublisherId" method="post">
 						<a href="/Admin/PublisherManagement/EditPublisher/@publisher.PublisherId" class="btn btn-primary">Sửa</a>
 						<button type="submit" onclick="return confirm('Bạn có chắc muốn xóa thương hiệu này?');" class="btn btn-danger">Xóa</button>

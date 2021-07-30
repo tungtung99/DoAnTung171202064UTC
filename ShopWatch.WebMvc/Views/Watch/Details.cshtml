@@ -265,14 +265,14 @@
                         <div class="input-group" style="color:#f63;font-family: 'UTMAvoBold',sans-serif;">
                             <h4 style=" font-weight:bold;">@Model.Price.ToString("C0", CultureInfo.CreateSpecificCulture("vi-VN"))</h4>
                         </div>
-                        <div class="input-group">
-                            <h5>Giá khuyến mãi @Model.PricePromotion.ToString("C0", CultureInfo.CreateSpecificCulture("vi-VN"))</h5>
+                        <div class="input-group" style="color:#f63;font-family: 'UTMAvoBold',sans-serif;">
+                            <h5 style=" font-weight:bold;">Giá khuyến mãi @Model.PricePromotion.ToString("C0", CultureInfo.CreateSpecificCulture("vi-VN"))</h5>
                         </div>
                     </div>
                     <div>
                         <div class="input-group addtocart">
                             <a href="#" class="addtocart btn btn-outline-primary mr-3"><span class="fas fa-shopping-cart mr-1"></span>Thêm vào giỏ hàng</a>
-                            <a href="#" class="addtocart btn btn-outline-primary mr-3"><span class="fas fa-shopping-cart mr-1"></span>Mua ngay</a>
+                            @*<a href="#" class="addtocart btn btn-outline-primary mr-3"><span class="fas fa-shopping-cart mr-1"></span>Mua ngay</a>*@
                             <div>
                                 <span class="loader mr-3"><img src="~/Assets/images/ajax-loader.gif" /></span>
                             </div>

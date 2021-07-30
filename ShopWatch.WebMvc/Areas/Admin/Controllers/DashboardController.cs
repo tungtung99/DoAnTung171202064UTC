@@ -44,8 +44,13 @@ namespace ShopWatch.WebMvc.Areas.Admin.Controllers
             };
             dashboardViewModel.TotalOrderWaiting = dashboardViewModel.OrderWating.Count();
             dashboardViewModel.TotalWatchesEnd = dashboardViewModel.WatchesEnd.Count();
-			var result = _context.Orders/*.Where(o => o.CreatedDate.Equals(DateTime.Now))*/;
-            if (result == null)
+			var result = _context.Orders.ToList()/*.Where(o => o.CreatedDate.Equals(DateTime.Now))*/;
+            foreach(var item in result)
+            {
+                var lstOrderDetail = _context.OrderDetails.Where(i => i.OrderId == item.OrderId).ToList();
+                item.OrderDetails = lstOrderDetail;
+            }
+            if (result.Count == 0)
             {
                 dashboardViewModel.TotalPriceOrder = 0;
             }

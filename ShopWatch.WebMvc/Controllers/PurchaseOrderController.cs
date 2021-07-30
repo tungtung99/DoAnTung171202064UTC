@@ -25,6 +25,11 @@ namespace ShopWatch.WebMvc.Controllers
                 var session = (UserLogin)Session["UserSession"];
                 var user = _context.Users.FirstOrDefault(m => m.AccountId == session.AccountId);
                 var listOrder = _context.Orders.Where(m => m.UserId == user.UserId).ToList();
+                foreach(var item in listOrder)
+                {
+                    var lstOrderDetail = _context.OrderDetails.Where(o => o.OrderId == item.OrderId).ToList();
+                    item.OrderDetails = lstOrderDetail;
+                }
                 return View(listOrder);
             }
             catch (Exception ex)

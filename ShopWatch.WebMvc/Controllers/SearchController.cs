@@ -48,30 +48,30 @@ namespace ShopWatch.WebMvc.Controllers
 
 		public ActionResult PriceSearch()
 		{
-			var priceSearchItems = new List<PriceSearchItem>
-			{
-				new PriceSearchItem()
-				{
-					DisplayValue =1000000,
-					ActionValue = 1000000,
+            var priceSearchItems = new List<PriceSearchItem>
+            {
+                new PriceSearchItem()
+                {
+                    DisplayValue =1000000.ToString("0,0,0") + "-" + 5000000.ToString("0,0,0"),
+                    ActionValue = 1,
 
 				},
 				new PriceSearchItem()
 				{
-					DisplayValue = 5000000,
-					ActionValue = 5000000,
+					DisplayValue = 5000000.ToString("0,0,0") + "-" + 10000000.ToString("0,0,0"),
+					ActionValue = 2,
 
 				},
 				new PriceSearchItem()
 				{
-					DisplayValue = 10000000,
-					ActionValue = 10000000,
+					DisplayValue = 10000000.ToString("0,0,0") +"-"+ 20000000.ToString("0,0,0"),
+					ActionValue = 3,
 
 				},
 				new PriceSearchItem()
 				{
-					DisplayValue = 20000000,
-					ActionValue = 20000000,
+					DisplayValue = " > "+ 20000000.ToString("0,0,0"),
+					ActionValue = 4,
 
 				}
 			};

@@ -127,6 +127,7 @@ namespace ShopWatch.WebMvc.Controllers
             Session[ConstantCommon.Cart] = cart;
             var session = (UserLogin)Session["UserSession"];
             int idUser = session.AccountId;
+
             var delete = db1.Carts.Where(c => c.UserId == idUser).ToList();
             db1.Carts.RemoveRange(delete);
             db1.SaveChanges();

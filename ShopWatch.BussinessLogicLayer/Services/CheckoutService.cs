@@ -13,9 +13,12 @@ namespace ShopWatch.BussinessLogicLayer.Services
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IGenericRepository<Order> _orderRepository;
 		private readonly IGenericRepository<OrderDetail> _orderDetailRepository;
-		private readonly IGenericRepository<Watch> _watchRepository;
+		private readonly IGenericRepository<Watch> _watchRepository; 
+        private readonly EF6.EF.DbDoAnContect db1 = new EF6.EF.DbDoAnContect();
 
-		public CheckoutService(
+
+
+        public CheckoutService(
 			IUnitOfWork unitOfWork,
 			IGenericRepository<Order> orderRepository,
 			IGenericRepository<OrderDetail> orderDetailRepository,
@@ -36,18 +39,26 @@ namespace ShopWatch.BussinessLogicLayer.Services
 
 			_orderRepository.Add(order);
 
-			foreach (var orderDetail in orderDetails)
+            _unitOfWork.Commit();
+            foreach (var orderDetail in orderDetails)
 			{
 				//Tìm sản phẩm muốn trừ số lượng
 				var watch = _watchRepository.GetById(orderDetail.WatchId);
 				//trừ số lượng
 				watch.Quantity -= orderDetail.Quantity;
 				_watchRepository.Update(watch); //Update tại bảng watch ứng với watchId
+                orderDetail.OrderId = order.OrderId;
+                orderDetail.Order = order;
+                EF6.EF.OrderDetail record = new EF6.EF.OrderDetail();
+                record.OrderId = order.OrderId;
+                record.Quantity = orderDetail.Quantity;
+                record.WatchId = orderDetail.WatchId;
+                record.UnitPrice = orderDetail.UnitPrice;
 
-				orderDetail.Order = order;
-				_orderDetailRepository.Add(orderDetail);
-			}
-			_unitOfWork.Commit();
+                db1.OrderDetails.Add(record);
+                db1.SaveChanges();
+
+            }
 			
 		}
 	}

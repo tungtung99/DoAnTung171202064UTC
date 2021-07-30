@@ -2,7 +2,7 @@
 @model ShopWatch.WebMvc.ViewModels.Customer.WatchListByPriceViewModel
 @{ ViewData["Title"] = $"{Model.CurrentPrice}"; }
 
-<h2>Giá tiền: @Model.CurrentPrice.ToString("0,0,0") VNĐ</h2>
+<h2>Giá tiền: @Model.CurrentPrice VNĐ</h2>
 @if (Model.Watches.Count() == 0)
 {
 	<h3>Không thấy sản phẩm phù hợp</h3>

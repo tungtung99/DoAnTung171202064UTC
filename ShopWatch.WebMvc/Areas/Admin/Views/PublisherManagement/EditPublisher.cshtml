@@ -38,7 +38,7 @@
 			<label class="control-label" for="ImgUrl">Ảnh :</label>
 			<div class="form-row">
 				<div class="col-6">
-					<input type="file" class="custom-file-input" id="validatedCustomFile" name="ImgUrl" onchange="readURL(this)" required/>
+					<input type="file" class="custom-file-input" id="validatedCustomFile" name="ImgUrl" onload="fnClick()" onchange="readURL(this)" required/>
 					<label class="custom-file-label" for="validatedCustomFile">Chọn ảnh</label>
 				</div>
 				<div class="col-6">
@@ -47,11 +47,33 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<input type="submit" class="btn btn-primary" value="Chỉnh sửa" />
+			<input type="submit" class="btn btn-primary btn-check" onclick="fnClick()" value="Chỉnh sửa" />
 			<a href="/Admin/PublisherManagement" class="btn btn-secondary">Hủy</a>
 		</div>
 	</div>
 </form>
+
+@*<script>
+    function fnReader() {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            console.log(e)
+            document.getElementById("FileImage").src= e.target.result;
+        };
+        var data = document.getElementsByClassName("custom-file-input");
+        data.ImgUrl.src = "/Assets/images/HINHTH/@Model.Image"; 
+        console.log(document.getElementsByClassName("custom-file-input").ImgUrl.files[0])
+        reader.readAsDataURL(document.getElementsByClassName("custom-file-input").ImgUrl.files[0]);
+    }
+    function fnClick(a) {
+        var data = document.getElementById("validatedCustomFile");
+        data.src = "/Assets/images/HINHTH/@Model.Image"; 
+        console.log(this);
+    }
+    window.onload = document.getElementById("validatedCustomFile").onload(function () {
+        console.log(this);
+    });
+</script>*@
 
 @section scripts {
 	<script src="~/Assets/js/ckeditor/ckeditor.js"></script>

@@ -5,19 +5,23 @@
 	ViewBag.Title = "Index";
 	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
-
+<style>
+    .managecolor {
+        color: #007bff;
+    }
+</style>
 <h2>Danh sách sản phẩm khuyến mãi</h2>
 <a href="@Url.Action("AddWatchPromotion", "WatchPromotionManagement")" class="btn btn-primary float-left">Thêm</a>
 <br/>
 <br />
 <table class="table table-condensed ">
 	<tr class="d-flex">
-		<th class="col-md-3 text-center">Tên khuyến mãi</th>
-		<th class="col-md-3 text-center">Sản phẩm áp dụng</th>
-		<th class="col-md-2 text-center">Ngày bắt đầu</th>
-		<th class="col-md-2 text-center">Ngày kết thúc</th>
-		<th class="col-md-1 text-center">Phần trăm</th>
-		<th class="col-md-1 text-center"></th>
+		<th class="col-md-3 text-center managecolor">Tên khuyến mãi</th>
+		<th class="col-md-3 text-center managecolor">Sản phẩm áp dụng</th>
+		<th class="col-md-2 text-center managecolor">Ngày bắt đầu</th>
+		<th class="col-md-2 text-center managecolor">Ngày kết thúc</th>
+		<th class="col-md-1 text-center managecolor">Phần trăm</th>
+		<th class="col-md-1 text-center managecolor">Quản lý</th>
 	</tr>
 
 	@foreach (var watch in Model)
@@ -40,7 +44,7 @@
 				<td class="col-md-2 text-center">
 					@watch.EndDate.ToString("dd/MM/yyyy")
 				</td>
-				<td class="col-md-1">
+				<td class="col-md-1 text-center">
 					@watch.Percent %
 				</td>
 				<td class="col-md-1 text-center">

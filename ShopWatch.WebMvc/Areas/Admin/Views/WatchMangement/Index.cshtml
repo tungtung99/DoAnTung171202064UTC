@@ -6,6 +6,11 @@
 	ViewBag.Title = "Watch management";
 	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
+<style>
+    .managecolor {
+        color: #007bff;
+    }
+</style>
 <h2>Quản Lý Đồng Hồ</h2>
 <hr />
 <div>
@@ -56,7 +61,7 @@ else
 	<label>Số sản phẩm :@Model.Count</label>
 	<table class="table table-condensed table-bordered">
 		<tr class="d-flex">
-			<th class="col-md-2 text-center">Image</th>
+			<th class="col-md-2 text-center managecolor">Image</th>
 			<th class="col-md-3 text-center">
 				<a href="@Url.Action("Index", "WatchMangement", new { sortOrder = ViewData["NameSortParm"], currentFilter = ViewData["CurrentFilter"] })">Tên đồng hồ</a>
 			</th>
@@ -70,8 +75,8 @@ else
 			<th class="col-md-1 text-center">
 				<a href="@Url.Action("Index", "WatchMangement", new { sortOrder = ViewData["QuantitySortParm"], currentFilter = ViewData["CurrentFilter"] })">Số lượng</a>
 			</th>
-			<th class="col-md-1 text-center">Is Active</th>
-			<th class="col-md-1 text-center">Quản lý</th>
+			<th class="col-md-1 text-center managecolor">Is Active</th>
+			<th class="col-md-1 text-center managecolor">Quản lý</th>
 		</tr>
 
 		@foreach (var watch in Model)

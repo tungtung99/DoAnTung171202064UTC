@@ -23,44 +23,44 @@
 }
 <table class="table table-condensed table-bordered">
 	<tr class="d-flex">
-		<th class="col-md-2">
+		<th class="col-md-2 text-center">
 			Tên vai trò
 		</th>
-		<th class="col-md-2">
+		<th class="col-md-2 text-center">
 			Tên tài khoản
 		</th>
-		<th class="col-md-2">
+		<th class="col-md-2 text-center">
 			Mật khẩu
 		</th>
-		<th class="col-md-2">
+		<th class="col-md-2 text-center">
 			Ngày tạo
 		</th>
-		<th class="col-md-2">
+		<th class="col-md-2 text-center">
 			Ngày sửa đổi
 		</th>
-		<th class="col-md-2"> Quản lý </th>
+		<th class="col-md-2 text-center"> Quản lý </th>
 	</tr>
 
 	@foreach (var item in Model)
 	{
 		<tr class="d-flex">
-			<td class="col-md-2">
+			<td class="col-md-2 text-center">
 				@Html.DisplayFor(modelItem => item.AccountRole.RoleName)
 			</td>
-			<td class="col-md-2">
+			<td class="col-md-2 text-center">
 				@Html.DisplayFor(modelItem => item.AccountName)
 			</td>
-			<td class="col-md-2">
+			<td class="col-md-2 text-center">
 				@Html.DisplayFor(modelItem => item.Password)
 			</td>
-			<td class="col-md-2">
+			<td class="col-md-2 text-center">
 				@Html.DisplayFor(modelItem => item.CreateDate)
 			</td>
-			<td class="col-md-2">
+			<td class="col-md-2 text-center">
 				@Html.DisplayFor(modelItem => item.ModifiedDate)
 			</td>
 
-			<td class="col-md-2">
+			<td class="col-md-2 text-center">
 				<form action="/Admin/Accounts/Delete/@item.AccountId" method="post">
 					<a href="/Admin/Accounts/Edit/@item.AccountId" class="btn btn-primary">Sửa</a>
 					<button type="submit" onclick="return confirm('Bạn có chắc muốn xóa tài khoản này?');" class="btn btn-danger">Xóa</button>

@@ -5,7 +5,11 @@
 	ViewBag.Title = "Index";
 	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
-
+<style>
+    .managecolor {
+        color: #007bff;
+    }
+</style>
 <h2>Quản Lý Người Dùng</h2>
 <hr />
 <div>
@@ -63,16 +67,16 @@ else
 
 	<table class="table table-condensed table-bordered">
 		<tr class="d-flex">
-			<th class="col-md-2">
+			<th class="col-md-2 text-center">
 
 				<a class="text-center" href="@Url.Action("Index", "UserManagement", new { sortOrder = ViewData["NameSortParm"], currentFilter = ViewData["CurrentFilter"] })">Tên người dùng</a>
 			</th>
-			<th class="col-md-1 text-center">Thành phố</th>
-			<th class="col-md-2 text-center">Email</th>
-			<th class="col-md-2 text-center">Số điện thoại</th>
-			<th class="col-md-2 text-center">Ảnh</th>
-			<th class="col-md-2 text-center">Tên tài khoản</th>
-			<th class="col-md-1 text-center">Quản lý</th>
+			<th class="col-md-1 text-center managecolor">Thành phố</th>
+			<th class="col-md-3 text-center managecolor">Email</th>
+			<th class="col-md-2 text-center managecolor">Số điện thoại</th>
+			@*<th class="col-md-2 text-center managecolor">Ảnh</th>*@
+			<th class="col-md-2 text-center managecolor">Tên tài khoản</th>
+			<th class="col-md-2 text-center managecolor">Quản lý</th>
 		</tr>
 
 		@foreach (var user in Model)
@@ -84,17 +88,17 @@ else
 				<td class="col-md-1 text-center">
 					@user.City
 				</td>
-				<td class="col-md-2">
+				<td class="col-md-3">
 					@user.Email
 				</td>
-				<td class="col-md-2">
+				<td class="col-md-2 text-center">
 					@user.Phone
 				</td>
-				<td class="col-md-2 text-center">
+				@*<td class="col-md-2 text-center">
 					<img src="~/Assets/images/Photo/@user.Photo" width="100" height="100" />
-				</td>
+				</td>*@
 				<td class="col-md-2 text-center">@user.Account.AccountName</td>
-				<td class="col-md-1 text-center">
+				<td class="col-md-2 text-center">
 					<form action="/Admin/UserManagement/Details/@user.UserId" method="post">
 
 						<button type="submit" class="btn btn-danger">Chi tiết</button>

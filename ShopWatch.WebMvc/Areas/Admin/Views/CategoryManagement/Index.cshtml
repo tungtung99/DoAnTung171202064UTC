@@ -5,7 +5,11 @@
 	ViewBag.Title = "Index";
 	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
-
+<style>
+    .managecolor{
+            color: #007bff;
+    }
+</style>
 <h2>Quản Lý Loại Sản Phẩm</h2>
 <hr />
 <div>
@@ -59,14 +63,14 @@ else
 
 	<table class="table table-condensed table-bordered">
 		<tr class="d-flex">
-			<th class="col-md-2">
+			<th class="col-md-2 text-center">
 				<a href="@Url.Action("Index", "CategoryManagement", new { sortOrder = ViewData["NameSortParm"], currentFilter = ViewData["CurrentFilter"] })">Tên Danh Mục</a>
 			</th>
-			<th class="col-md-6">Mô tả</th>
-			<th class="col-md-2">
+			<th class="col-md-6 text-center managecolor">Mô tả</th>
+			<th class="col-md-2 text-center">
 				<a href="@Url.Action("Index", "CategoryManagement", new { sortOrder = ViewData["TotalSortParm"], currentFilter = ViewData["CurrentFilter"] })">Tổng Đồng Hồ</a>
 			</th>
-			<th class="col-md-2">Quản Lý</th>
+			<th class="col-md-2 text-center managecolor">Quản Lý</th>
 		</tr>
 
 		@foreach (var category in Model)
@@ -81,7 +85,7 @@ else
 				<td class="col-md-2 text-center">
 					@category.Watches.Count()
 				</td>
-				<td class="col-md-2">
+				<td class="col-md-2 text-center" >
 					<form action="/Admin/CategoryManagement/DeleteCategory/@category.CategoryId" method="post">
 						<a href="/Admin/CategoryManagement/EditCategory/@category.CategoryId" class="btn btn-primary">Sửa</a>
 						<button type="submit" onclick="return confirm('Bạn có chắc muốn xóa danh mục này?');" class="btn btn-danger">Xóa</button>

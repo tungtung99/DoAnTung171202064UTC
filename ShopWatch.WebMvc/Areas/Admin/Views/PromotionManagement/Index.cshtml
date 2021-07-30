@@ -5,7 +5,11 @@
 	ViewBag.Title = "Khuyến mãi đó";
 	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
-
+<style>
+    .managecolor {
+        color: #007bff;
+    }
+</style>
 <h2>Danh sách khuyến mãi</h2>
 <hr />
 <div>
@@ -73,7 +77,7 @@ else
 			<th class="col-md-2 text-center">
 				<a href="@Url.Action("Index", "PromotionManagement", new { sortOrder = ViewData["TotalSortParm"], currentFilter = ViewData["CurrentFilter"] })">Tổng đồng hồ đã thêm</a>
 			</th>
-			<th class="col-md-2 text-center">Quản lý</th>
+			<th class="col-md-2 text-center managecolor">Quản lý</th>
 		</tr>
 
 		@foreach (var promotion in Model)
@@ -94,7 +98,7 @@ else
 				<td class="col-md-2 text-center">
 					@promotion.Watches.Count()
 				</td>
-				<td class="col-md-2">
+				<td class="col-md-2 text-center">
 					<form action="/Admin/PromotionManagement/DeletePromotion/@promotion.PromotionId" method="post">
 						<a href="/Admin/PromotionManagement/EditPromotion/@promotion.PromotionId" class="btn btn-primary">Sửa</a>
 						<button type="submit" onclick="return confirm('Bạn có chắc muốn xóa khuyến mại này?');" class="btn btn-danger">Xóa</button>
