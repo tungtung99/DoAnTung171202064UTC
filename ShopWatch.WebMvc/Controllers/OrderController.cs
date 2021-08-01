@@ -1,4 +1,5 @@
-﻿using ShopWatch.BussinessLogicLayer;
+﻿using EF6.EF;
+using ShopWatch.BussinessLogicLayer;
 using ShopWatch.BussinessLogicLayer.IService;
 using ShopWatch.Model;
 using ShopWatch.Model.DataContext;
@@ -17,9 +18,10 @@ namespace ShopWatch.WebMvc.Controllers
 		private readonly IOrderService _orderService;
 		private readonly ICheckoutService _checkoutService;
         private readonly ShopWatchDataContext _context;/* = new ShopWatchDataContext();*/
+        private readonly DbDoAnContect db1 = new DbDoAnContect();
 
 
-		public OrderController(IOrderService orderService, ICheckoutService checkoutService, ShopWatchDataContext context)
+        public OrderController(IOrderService orderService, ICheckoutService checkoutService, ShopWatchDataContext context)
 		{
 			_orderService = orderService;
 			_checkoutService = checkoutService;
@@ -94,6 +96,7 @@ namespace ShopWatch.WebMvc.Controllers
 				}
                 _checkoutService.Checkout(order, orderDetails);
 				cartItems.Clear();
+                _context.SaveChanges();
 				return RedirectToAction("CheckoutComplete");
 			}
 			return View(orderViewModel);

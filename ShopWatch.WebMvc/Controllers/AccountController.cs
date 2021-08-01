@@ -59,7 +59,9 @@ namespace ShopWatch.WebMvc.Controllers
                     int id = session.AccountId;
                     try
                     {
-						var lstCart = db1.Carts.Where(c => c.UserId == id).ToList();
+
+                        var record = db1.Users.FirstOrDefault(u => u.AccountId == id);
+                        var lstCart = db1.Carts.Where(c => c.UserId == record.UserId).ToList();
 						var lstShopCartItem = new List<ShoppingCartItem>();
 						foreach (var item in lstCart)
 						{

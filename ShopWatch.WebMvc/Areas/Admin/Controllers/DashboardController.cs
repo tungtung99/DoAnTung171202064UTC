@@ -1,4 +1,5 @@
 ﻿using ShopWatch.Model.DataContext;
+using ShopWatch.Model.Enum;
 using ShopWatch.WebMvc.Areas.Admin.ViewModel;
 using System;
 using System.Data.Entity.Migrations;
@@ -56,7 +57,7 @@ namespace ShopWatch.WebMvc.Areas.Admin.Controllers
             }
             else
             {
-                dashboardViewModel.TotalPriceOrder = result.Sum(s => s.OrderDetails.Sum(a => (a.Quantity * a.UnitPrice)));
+                dashboardViewModel.TotalPriceOrder = result.Where(x=>x.Status == Status.Finish).Sum(s => s.OrderDetails.Sum(a => (a.Quantity * a.UnitPrice)));
 
             }
 			

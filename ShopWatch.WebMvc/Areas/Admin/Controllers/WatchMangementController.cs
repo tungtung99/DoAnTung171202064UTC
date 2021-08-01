@@ -273,7 +273,7 @@ namespace ShopWatch.WebMvc.Areas.Admin.Controllers
 
                     try
                     {
-                        string path = Path.Combine(Server.MapPath("~/Assets/images/HINHNHO" + watch.SmallImage), "3.jpg");
+                        string path = Path.Combine(Server.MapPath("~/Assets/images/HINHNHO/" + watch.SmallImage), "3.jpg");
                         small3.SaveAs(path);
                     }
                     catch (Exception )
@@ -288,7 +288,7 @@ namespace ShopWatch.WebMvc.Areas.Admin.Controllers
 
                     try
                     {
-                        string path = Path.Combine(Server.MapPath("~/Assets/images/HINHNHO" + watch.SmallImage), "2.jpg");
+                        string path = Path.Combine(Server.MapPath("~/Assets/images/HINHNHO/" + watch.SmallImage), "2.jpg");
                         small2.SaveAs(path);
                     }
                     catch (Exception)

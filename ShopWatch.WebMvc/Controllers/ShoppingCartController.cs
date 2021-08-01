@@ -29,7 +29,8 @@ namespace ShopWatch.WebMvc.Controllers
             {
 
                 int id = session.AccountId;
-                var lstCart = db1.Carts.Where(c => c.UserId == id).ToList();
+                var record = db1.Users.FirstOrDefault(u => u.AccountId == id);
+                var lstCart = db1.Carts.Where(c => c.UserId == record.UserId).ToList();
                 //var lstWatch = new List<ShopWatch.Model.Watch>();
                 foreach (var item in lstCart)
                 {
@@ -127,18 +128,20 @@ namespace ShopWatch.WebMvc.Controllers
             Session[ConstantCommon.Cart] = cart;
             var session = (UserLogin)Session["UserSession"];
             int idUser = session.AccountId;
-
-            var delete = db1.Carts.Where(c => c.UserId == idUser).ToList();
+            var userdelete = db1.Users.FirstOrDefault(u => u.AccountId == idUser);
+            var delete = db1.Carts.Where(c => c.UserId == userdelete.UserId).ToList();
             db1.Carts.RemoveRange(delete);
             db1.SaveChanges();
             foreach (var item in cart)
             {
-                var checkAdd = db1.Carts.Where(c => c.UserId == idUser && c.WatchId == item.WatchId).FirstOrDefault();
+                var userAdd = db1.Users.FirstOrDefault(u => u.AccountId == idUser);
+                var checkAdd = db1.Carts.Where(c => c.UserId == userAdd.UserId && c.WatchId == item.WatchId).FirstOrDefault();
                 if (checkAdd == null)
                 {
                     Cart cart1 = new Cart();
                     cart1.Quantity = item.Quantity;
-                    cart1.UserId = idUser;
+                    cart1.UserId = userAdd.UserId;
+                    cart1.User = userAdd;
                     cart1.WatchId = item.WatchId;
                     cart1.CreatedDate = DateTime.Now;
                     db1.Carts.Add(cart1);
@@ -164,7 +167,8 @@ namespace ShopWatch.WebMvc.Controllers
             item.Quantity++;
             var session = (UserLogin)Session["UserSession"];
             int idUser = session.AccountId;
-            var addCart = db1.Carts.Where(c => c.WatchId == watchId && c.UserId == idUser).FirstOrDefault();
+            var record = db1.Users.FirstOrDefault(u => u.AccountId == idUser);
+            var addCart = db1.Carts.Where(c => c.WatchId == watchId && c.UserId == record.UserId).FirstOrDefault();
             int soluong = addCart.Quantity;
             addCart.Quantity = soluong + 1;
             db1.SaveChanges();
@@ -186,7 +190,8 @@ namespace ShopWatch.WebMvc.Controllers
                 item.Quantity--;
                 var session = (UserLogin)Session["UserSession"];
                 int idUser = session.AccountId;
-                var SubCart = db1.Carts.Where(c => c.WatchId == watchId && c.UserId == idUser).FirstOrDefault();
+                var record = db1.Users.FirstOrDefault(u => u.AccountId == idUser);
+                var SubCart = db1.Carts.Where(c => c.WatchId == watchId && c.UserId == record.UserId).FirstOrDefault();
                 int soluong = SubCart.Quantity;
                 SubCart.Quantity = soluong - 1;
                 db1.SaveChanges();
@@ -197,7 +202,9 @@ namespace ShopWatch.WebMvc.Controllers
                 cart.Remove(item);
                 var session = (UserLogin)Session["UserSession"];
                 int idUser = session.AccountId;
-                var SubCart = db1.Carts.Where(c => c.WatchId == watchId && c.UserId == idUser).FirstOrDefault();
+
+                var record = db1.Users.FirstOrDefault(u => u.AccountId == idUser);
+                var SubCart = db1.Carts.Where(c => c.WatchId == watchId && c.UserId == record.UserId).FirstOrDefault();
                 db1.Carts.Remove(SubCart);
                 db1.SaveChanges();
             }
@@ -210,11 +217,18 @@ namespace ShopWatch.WebMvc.Controllers
 
         public void RemoveProduct(int watchId)
         {
-            List<ShoppingCartItem> cart = Session[ConstantCommon.Cart] as List<ShoppingCartItem>;
+            /*List<ShoppingCartItem> cart = Session[ConstantCommon.Cart] as List<ShoppingCartItem>;
 
-            ShoppingCartItem item = cart.FirstOrDefault(x => x.WatchId == watchId);
+            ShoppingCartItem item = cart.FirstOrDefault(x => x.WatchId == watchId);*/
+            var session = (UserLogin)Session["UserSession"];
+            int idUser = session.AccountId;
 
-            cart.Remove(item);
+            var recordUser = db1.Users.FirstOrDefault(u => u.AccountId == idUser);
+            var record = db1.Carts.FirstOrDefault(c => c.WatchId == watchId && c.UserId == recordUser.UserId);
+            db1.Carts.Remove(record);
+            db1.SaveChanges();
+            //cart.Remove(item);
+
             /*var delete = db.Carts.Where(c => c.WatchId == watchId)*/
         }
     }

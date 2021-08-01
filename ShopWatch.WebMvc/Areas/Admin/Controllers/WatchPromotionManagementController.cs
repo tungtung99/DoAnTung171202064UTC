@@ -14,6 +14,9 @@ namespace ShopWatch.WebMvc.Areas.Admin.Controllers
         private readonly IPromotionService _promotionService;
         private readonly IWatchService _watchService;
         private readonly ShopWatchDataContext _context;
+        private readonly EF6.EF.DbDoAnContect db1 = new EF6.EF.DbDoAnContect();
+
+        private ShopWatchDataContext db = new ShopWatchDataContext();
 
         public WatchPromotionManagementController(IPromotionService promotionService,IWatchService watchService,ShopWatchDataContext context)
 		{
@@ -51,8 +54,9 @@ namespace ShopWatch.WebMvc.Areas.Admin.Controllers
             }
             var watchpromotion = _promotionService.GetById(a.PromotionId);
             var watch = _watchService.GetById(a.WatchId);
-            watchpromotion.Watches.Add(watch);
-            _promotionService.Update(watchpromotion);
+             watchpromotion.Watches.Add(watch);
+             _promotionService.Update(watchpromotion);
+            db1.SaveChanges();
 
             var ui = watch.Promotions.FirstOrDefault();
             if(watchpromotion.StartDate<=DateTime.Now && DateTime.Now<=watchpromotion.EndDate)

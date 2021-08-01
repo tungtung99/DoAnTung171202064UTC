@@ -188,6 +188,11 @@ namespace ShopWatch.WebMvc.Areas.Admin.Controllers
             {
                 account.ModifiedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,
                  DateTime.Now.Hour,DateTime.Now.Minute,DateTime.Now.Second);
+                var acc = db.Accounts.FirstOrDefault(x=>x.AccountId == account.AccountId);
+                acc.AccountName = account.AccountName;
+                acc.AccountRole = account.AccountRole;
+                acc.AccountRoleId = account.AccountRoleId;
+                acc.Password = account.Password;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

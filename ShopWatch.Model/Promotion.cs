@@ -25,7 +25,7 @@ namespace ShopWatch.Model
 		[Required]
 		public DateTime EndDate { get; set; }
 
-		public virtual ICollection<Watch> Watches { get; set; }
+		public virtual List<Watch> Watches { get; set; }
 
 	}
 }
