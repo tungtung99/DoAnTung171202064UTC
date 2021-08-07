@@ -26,7 +26,7 @@
 </div>
 @if (!Model.Any())
 {
-	<tr><td colspan="3" class="text-center">Don't have a category yet.</td></tr>
+	<tr><td colspan="3" class="text-center">Không có loại sản phẩm.</td></tr>
 }
 else
 {
@@ -68,7 +68,7 @@ else
 			</th>
 			<th class="col-md-6 text-center managecolor">Mô tả</th>
 			<th class="col-md-2 text-center">
-				<a href="@Url.Action("Index", "CategoryManagement", new { sortOrder = ViewData["TotalSortParm"], currentFilter = ViewData["CurrentFilter"] })">Tổng Đồng Hồ</a>
+				<a href="@Url.Action("Index", "CategoryManagement", new { sortOrder = ViewData["TotalSortParm"], currentFilter = ViewData["CurrentFilter"] })">Tổng loại Đồng Hồ</a>
 			</th>
 			<th class="col-md-2 text-center managecolor">Quản Lý</th>
 		</tr>

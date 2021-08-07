@@ -9,6 +9,7 @@ namespace ShopWatch.WebMvc.ViewModels
         public Status Status { get; set; }
 
         public string ShipAddress { get; set; }
+        public string ShipAddresss { get; set; }
 
         public string PhoneNumber { get; set; }
 

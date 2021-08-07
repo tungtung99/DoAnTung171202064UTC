@@ -5,7 +5,7 @@
 }
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-7">
         <section id="loginForm">
             @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
@@ -14,7 +14,7 @@
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
-                    @Html.LabelFor(m => m.AccountName, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-3 control-label" style="padding-bottom:10px;">Tên đăng nhập</div>
                     <div class="col-md-10">
                         @Html.TextBoxFor(m => m.AccountName, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.AccountName, "", new { @class = "text-danger" })
@@ -24,16 +24,21 @@
                     @Html.LabelFor(m => m.PassWord, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
                         @Html.PasswordFor(m => m.PassWord, new { @class = "form-control", @id = "pass" })
+                    </div>
+                </div>
+                <div style="display:flex;">
+
+                    <div style="width:15%; padding-left:15px;">
                         <input type="checkbox" onclick="myFunction('pass')">&ensp;Hiện
                         @Html.ValidationMessageFor(m => m.PassWord, "", new { @class = "text-danger" })
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                        </div>
+
+                    <div class="checkbox" style="width:20%;">
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.LabelFor(m => m.RememberMe)
+                    </div>
+                    <div>
+                        <a  href="">Quên mật khẩu</a>
                     </div>
                 </div>
                 <div>
@@ -44,7 +49,7 @@
                         <input type="submit" value="Đăng nhập" class="btn btn-dark" />
                     </div>
                 </div>
-                <p>
+                <p style="padding-left:15px;">
                     @Html.ActionLink("Đăng kí tài khoản mới", "Register")
                 </p> @* Enable this once you have account confirmation enabled for password reset functionality
                     <p>

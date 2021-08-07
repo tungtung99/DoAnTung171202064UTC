@@ -94,6 +94,10 @@ namespace ShopWatch.WebMvc.Areas.Admin.Controllers
 		[HttpPost]
 		public ActionResult Edit(Order order)
 		{
+            if(order.Status == ShopWatch.Model.Enum.Status.Finish)
+            {
+                order.ShippedDate = DateTime.Now;
+            }
 			if (ModelState.IsValid)
 			{
 				_orderService.Update(order);

@@ -3,6 +3,7 @@
 @model Watch
 @{
     var promotion = Model.Promotions.FirstOrDefault(item => (item.StartDate <= DateTime.Now && DateTime.Now <= item.EndDate));
+    var isCheckCount = Model.Quantity <= 5 ? true : false;
 }
 <div class="col-md-3">
     <a href="/Watch/Details/@Model.WatchId"><img class="img-fluid img-thumbnail" style="height:80%;width:100%" src="~/Assets/images/HINHLON/@Model.ImageUrl" /></a>
@@ -16,6 +17,11 @@
             <span>@promotion.PromotionName</span>
         </p>
 
+    }
+    @if(isCheckCount){
+        <p style="position: absolute;top: 40px;left: 12px; padding: 0px 5px 0px 5px; background-color: rgb(242, 82, 32);color: #fff;font-size: 0.8rem;border-radius: 2px;text-align: center;">
+            <span>Sắp hết</span>
+        </p>
     }
     <div class="input-group mb-3">
         <p class="form-control">@Model.Price.ToString("C0", CultureInfo.CreateSpecificCulture("vi-VN"))</p>

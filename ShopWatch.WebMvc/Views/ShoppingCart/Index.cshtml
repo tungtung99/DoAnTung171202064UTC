@@ -6,200 +6,201 @@
 
 @if (Model != null)
 {
-	<h2>Giỏ hàng có @Model.Sum(x => x.Quantity) sản phẩm</h2>
+    <h2>Giỏ hàng có @Model.Sum(x => x.Quantity) sản phẩm</h2>
 }
 else
 {
-	<h2>Không có sản phẩm nào</h2>
+    <h2>Không có sản phẩm nào</h2>
 }
 <hr />
 
 @if (ViewBag.Message != null)
 {
-	<div class="text-center">
-		<img src="~/Assets/images/cart-empty.png" alt="Don't have any item in your cart. Shopping Now!" />
-		<p>@ViewBag.Message</p>
-		<a href="/Home/Index" class="btn btn-warning">Mua ngay</a>
-	</div> 
+    <div class="text-center">
+        <img src="~/Assets/images/cart-empty.png" alt="Không có mặt hàng nào trong giỏ hàng của bạn. Mua sắm ngay!" />
+        <p>@ViewBag.Message</p>
+        <a href="/Home/Index" class="btn btn-warning">Mua ngay</a>
+    </div>
 }
 else
 {
-	<div class="table-responsive">
-	<table class="table">
-		<tr>
-			<th scope="col">Hình ảnh</th>
-			<th scope="col">Sản phẩm</th>
-			<th scope="col">Giá tiền</th>
-			<th scope="col"></th>
-			<th scope="col">Số lượng</th>
-			<th scope="col"></th>
-			<th scope="col">Thành tiền</th>
-			<th scope="col">Action</th>
-		</tr>
-		@foreach (var item in Model)
-		{
-			<tr>
-				<td>
-					<img class="img-fluid" style="max-width:200px;" src="~/Assets/images/HINHLON/@item.Watch.ImageUrl" alt="@item.Watch.WatchName" />
-				</td>
-				<td>
-					<a href="/Watch/Details/@item.Watch.WatchId">@item.Watch.WatchName</a>
-				</td>
-				<td>
-					@item.Watch.Price.ToString("C0", CultureInfo.CreateSpecificCulture("vi-VN"))
-				</td>
-				<td><a href="#" class="decrproduct btn btn-outline-warning" data-id="@item.WatchId">-</a></td>
-				<td class="qty@(item.WatchId) text-center">
-					@item.Quantity
-				</td>
-				<td><a href="#" class="incrproduct btn btn-outline-warning" data-id="@item.WatchId">+</a></td>
-				<td class="total@(item.WatchId)">
-					@item.Total
-				</td>
-				<td>
-					<a href="#" class="removeproduct" data-id="@item.WatchId">Xóa</a>
-				</td>
-			</tr>
-		}
+    <div class="table-responsive">
+        <table class="table">
+            <tr>
+                <th scope="col">Hình ảnh</th>
+                <th scope="col">Sản phẩm</th>
+                <th scope="col">Giá tiền</th>
+                <th scope="col"></th>
+                <th scope="col">Số lượng</th>
+                <th scope="col"></th>
+                <th scope="col">Thành tiền</th>
+                <th scope="col">Hành động</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <img class="img-fluid" style="max-width:200px;" src="~/Assets/images/HINHLON/@item.Watch.ImageUrl" alt="@item.Watch.WatchName" />
+                    </td>
+                    <td>
+                        <a href="/Watch/Details/@item.Watch.WatchId">@item.Watch.WatchName</a>
+                    </td>
+                    <td>
+                        @item.Watch.Price.ToString("C0", CultureInfo.CreateSpecificCulture("vi-VN"))
+                    </td>
+                    <td><a href="#" class="decrproduct btn btn-outline-warning" data-id="@item.WatchId">-</a></td>
+                    <td class="qty@(item.WatchId) text-center">
+                        @item.Quantity
+                    </td>
+                    <td><a href="#" class="incrproduct btn btn-outline-warning" data-id="@item.WatchId">+</a></td>
+                    <td class="total@(item.WatchId)">
+                        @item.Total
+                    </td>
+                    <td>
+                        <a href="#" class="removeproduct" data-id="@item.WatchId">Xóa</a>
+                    </td>
+                </tr>
+            }
 
-		<tr>
-			<td colspan="6">Total:</td>
-			<td class="grandtotal"><span>@ViewBag.GrandTotal</span></td>
-		</tr>
-	</table>
-	</div> 
-	if (Session["UserSession"]!=null)
-	{
-		<div class="text-center">
-			<a href="/Order/Checkout" class="btn btn-primary">Mua hàng</a>
-		</div> 
-	}
-	else
-	{
-		<div class="text-center">
-			<a href="/Account/Login" class="btn btn-primary">Vui lòng đăng nhập</a>
-		</div>
-	}
+            <tr>
+                <td colspan="6">Tổng:</td>
+                <td class="grandtotal"><span>@ViewBag.GrandTotal</span></td>
+            </tr>
+        </table>
+    </div>
+    if (Session["UserSession"] != null)
+    {
+        <div class="text-center">
+            <a href="/Order/Checkout" class="btn btn-primary">Mua hàng</a>
+            <a class="btn btn-primary" href="/Home/Index">Tiếp tục mua hàng</a>
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+            <a href="/Account/Login" class="btn btn-primary">Vui lòng đăng nhập</a>
+        </div>
+    }
 
 }
 
 @section Scripts {
-	<script>
-		$(function () {
+    <script>
+        $(function () {
 
-			/*
-			* Increment product
-			*/
+            /*
+            * Increment product
+            */
 
-			$("a.incrproduct").click(function (e) {
-				e.preventDefault();
+            $("a.incrproduct").click(function (e) {
+                e.preventDefault();
 
-				var WatchId = $(this).data("id");
-				var url = "/ShoppingCart/IncrementProduct";
+                var WatchId = $(this).data("id");
+                var url = "/ShoppingCart/IncrementProduct";
 
-				$.getJSON(url, { WatchId: WatchId }, function (data) {
+                $.getJSON(url, { WatchId: WatchId }, function (data) {
 
-					$("td.qty" + WatchId).html(data.qty);
+                    $("td.qty" + WatchId).html(data.qty);
 
-					var price = data.qty * data.price;
-					var priceHtml = price.toFixed(2);
+                    var price = data.qty * data.price;
+                    var priceHtml = price.toFixed(2);
 
-					$("td.total" + WatchId).html(priceHtml);
+                    $("td.total" + WatchId).html(priceHtml);
 
-					var gt = parseFloat($("td.grandtotal span").text());
-					var grandtotal = (gt + data.price).toFixed(2);
+                    var gt = parseFloat($("td.grandtotal span").text());
+                    var grandtotal = (gt + data.price).toFixed(2);
 
-					$("td.grandtotal span").text(grandtotal);
-				}).done(function (data) {
-					var url2 = "/ShoppingCart/PaypalPartial";
+                    $("td.grandtotal span").text(grandtotal);
+                }).done(function (data) {
+                    var url2 = "/ShoppingCart/PaypalPartial";
 
-					$.get(url2, {}, function (data) {
-						$('div.paypaldiv').html(data);
-					});
-				});
-			});
+                    $.get(url2, {}, function (data) {
+                        $('div.paypaldiv').html(data);
+                    });
+                });
+            });
 
-			/*
-			* Decrement product
-			*/
+            /*
+            * Decrement product
+            */
 
-			$("a.decrproduct").click(function (e) {
-				e.preventDefault();
+            $("a.decrproduct").click(function (e) {
+                e.preventDefault();
 
-				var $this = $(this);
-				var WatchId = $(this).data("id");
-				var url = "/ShoppingCart/DecrementProduct";
+                var $this = $(this);
+                var WatchId = $(this).data("id");
+                var url = "/ShoppingCart/DecrementProduct";
 
-				$.getJSON(url, { WatchId: WatchId }, function (data) {
-					if (data.qty == 0) {
-						$this.parent().parent().fadeOut("fast", function () {
-							location.reload();
-						});
-					}
-					else {
-						$("td.qty" + WatchId).html(data.qty);
+                $.getJSON(url, { WatchId: WatchId }, function (data) {
+                    if (data.qty == 0) {
+                        $this.parent().parent().fadeOut("fast", function () {
+                            location.reload();
+                        });
+                    }
+                    else {
+                        $("td.qty" + WatchId).html(data.qty);
 
-						var price = data.qty * data.price;
-						var priceHtml = price.toFixed(2);
+                        var price = data.qty * data.price;
+                        var priceHtml = price.toFixed(2);
 
-						$("td.total" + WatchId).html(priceHtml);
+                        $("td.total" + WatchId).html(priceHtml);
 
-						var gt = parseFloat($("td.grandtotal span").text());
-						var grandtotal = (gt - data.price).toFixed(2);
+                        var gt = parseFloat($("td.grandtotal span").text());
+                        var grandtotal = (gt - data.price).toFixed(2);
 
-						$("td.grandtotal span").text(grandtotal);
-					}
+                        $("td.grandtotal span").text(grandtotal);
+                    }
 
-				}).done(function (data) {
-					var url2 = "/ShoppingCart/PaypalPartial";
+                }).done(function (data) {
+                    var url2 = "/ShoppingCart/PaypalPartial";
 
-					$.get(url2, {}, function (data) {
-						$('div.paypaldiv').html(data);
-					});
-				});
-			});
+                    $.get(url2, {}, function (data) {
+                        $('div.paypaldiv').html(data);
+                    });
+                });
+            });
 
-			/*
-			* Remove product
-			*/
+            /*
+            * Remove product
+            */
 
-			$("a.removeproduct").click(function (e) {
-				e.preventDefault();
+            $("a.removeproduct").click(function (e) {
+                e.preventDefault();
 
-				var $this = $(this);
-				var WatchId = $(this).data("id");
-				var url = "/ShoppingCart/RemoveProduct";
+                var $this = $(this);
+                var WatchId = $(this).data("id");
+                var url = "/ShoppingCart/RemoveProduct";
 
-				$.get(url, { WatchId: WatchId }, function (data) {
-					location.reload();
-				});
-			});
+                $.get(url, { WatchId: WatchId }, function (data) {
+                    location.reload();
+                });
+            });
 
-			//////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////
 
-			/*
-			* Place order
-			*/
+            /*
+            * Place order
+            */
 
-			$("a.placeorder").click(function (e) {
-				e.preventDefault();
+            $("a.placeorder").click(function (e) {
+                e.preventDefault();
 
-				var $this = $(this);
+                var $this = $(this);
 
-				var url = "/ShoppingCart/PlaceOrder";
+                var url = "/ShoppingCart/PlaceOrder";
 
-				$(".ajaxbg").show();
+                $(".ajaxbg").show();
 
-				$.post(url, {}, function (data) {
-					$(".ajaxbg span").text("Thank you. You will now be redirected to paypal.");
-					setTimeout(function () {
-						$('form input[name="submit"]').click();
-					}, 2000);
-				});
-			});
+                $.post(url, {}, function (data) {
+                    $(".ajaxbg span").text("Thank you. You will now be redirected to paypal.");
+                    setTimeout(function () {
+                        $('form input[name="submit"]').click();
+                    }, 2000);
+                });
+            });
 
-			//////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////
 
-		});</script>
+        });</script>
 
 }

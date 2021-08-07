@@ -3,8 +3,8 @@
 @using System.Globalization
 @model PaginatedList<Order>
 @{
-	ViewBag.Title = "Danh sách đơn hàng";
-	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Danh sách đơn hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 <style>
     .managecolor {
@@ -14,115 +14,116 @@
 <h2>Danh sách đơn hàng</h2>
 <hr />
 <div>
-	@*<a href="@Url.Action("AddWatch", "WatchMangement")" class="btn btn-primary float-left">Add Watch</a>*@
+    @*<a href="@Url.Action("AddWatch", "WatchMangement")" class="btn btn-primary float-left">Add Watch</a>*@
 
-	<form action="@Url.Action("Index", "OrderManagement")" method="get" class="form-inline float-right">
+    <form action="@Url.Action("Index", "OrderManagement")" method="get" class="form-inline float-right">
         <div class="form-group mx-sm-3 mb-2">
             <input type="text" class="form-control mr-3" id="inputSearch" name="SearchString" value="@ViewData["currentFilter"]" placeholder="Tìm kiếm....">
             <input type="submit" class=" form-control btn btn-primary mr-3" value="Tìm kiếm" /> |
             <a href="/Admin/OrderManagement/Index" class="btn btn-default">Trở lại danh sách đầy đủ</a>
         </div>
-	</form>
+    </form>
 </div>
 
 
-	<nav aria-label="Page navigation example">
-		<ul class="pagination justify-content-center">
-			@{ var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-				var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-				ViewBag.PageRange = 3; }
-			<li class="page-item">
-				<a href="@Url.Action("Index", "OrderManagement", new { sortOrder=ViewData["CurrentSort"], page=1, currentFilter=ViewData["CurrentFilter"] })"
-				   class="btn page-link @prevDisabled"><<</a>
-			<li class="page-item">
-				<a href="@Url.Action("Index", "OrderManagement", new { sortOrder=ViewData["CurrentSort"], page=(Model.PageIndex - 1 <= 0 ? 1 : Model.PageIndex - 1), currentFilter=ViewData["CurrentFilter"] })"
-				   class="btn page-link @prevDisabled"><</a>
-			</li>
-			@for (int i = 1; i <= Model.TotalPages; i++)
-			{
-				if (i >= Model.PageIndex - ViewBag.PageRange && i <= Model.PageIndex + ViewBag.PageRange)
-				{
-					<li class="page-item">
-						<a class="@(i==Model.PageIndex ? "Current" : "") page-link"
-						   href="@Url.Action("Index", "OrderManagement", new { sortOrder=ViewData["CurrentSort"], page=i, currentFilter=ViewData["CurrentFilter"] })">@i</a>
-					</li>
-				}
-			}
-			<li class="page-item">
-				<a href="@Url.Action("Index", "OdrerManagement", new { sortOrder=ViewData["CurrentSort"], page=(Model.PageIndex + 1 > Model.TotalPages ? Model.TotalPages : Model.PageIndex + 1), currentFilter=ViewData["CurrentFilter"] })"
-				   class="btn page-link @nextDisabled">></a>
-			<li class="page-item">
-				<a href="@Url.Action("Index", "OrderManagement", new { sortOrder=ViewData["CurrentSort"], page=(Model.TotalPages), currentFilter=ViewData["CurrentFilter"] })"
-				   class="btn page-link @nextDisabled">>></a>
-		</ul>
-	</nav>
-	<span class="text-danger">Có @Model.Count đơn hàng</span>
-	<div>
-		@using (Html.BeginForm("Index", "OrderManagement", FormMethod.Get))
-		{
-			<span>Trạng thái:</span> @Html.DropDownList("status", EnumHelper.GetSelectList(typeof(ShopWatch.Model.Enum.Status)), "Tất cả hóa đơn", new { @onchange = "this.form.submit();" })
-		}
-	</div>
-	<table class="table table-condensed table-bordered">
-		<tr class="d-flex">
-			<th class="col-md-2 text-center managecolor">Tên khách hàng</th>
-			<th class="col-md-2 text-center">
-				<a href="@Url.Action("Index", "OrderManagement", new { sortOrder = ViewData["NameSortParm"], currentFilter = ViewData["CurrentFilter"] })">Ngày đặt hàng</a>
-			</th>
-			<th class="col-md-2 text-center">
-				<a href="@Url.Action("Index", "OrderManagement", new { sortOrder = ViewData["PricePromotionSortParm"], currentFilter = ViewData["CurrentFilter"] })">Ngày giao hàng</a>
-			</th>
-			<th class="col-md-1 text-center">
-				<a href="@Url.Action("Index", "OrderManagement", new { sortOrder = ViewData["QuantitySortParm"], currentFilter = ViewData["CurrentFilter"] })">Trạng thái</a>
-			</th>
-			<th class="col-md-1 text-center managecolor">SĐT</th>
-			<th class="col-md-2 text-center">
-				<a href="@Url.Action("Index", "OrderManagement", new { sortOrder = ViewData["TotalSortParm"], currentFilter = ViewData["CurrentFilter"] })">Tổng tiền</a>
-			</th>
-			<th class="col-md-2 text-center managecolor">Quản lý</th>
-		</tr>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        @{ var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+            ViewBag.PageRange = 3; }
+        <li class="page-item">
+            <a href="@Url.Action("Index", "OrderManagement", new { sortOrder=ViewData["CurrentSort"], page=1, currentFilter=ViewData["CurrentFilter"] })"
+               class="btn page-link @prevDisabled"><<</a>
+        <li class="page-item">
+            <a href="@Url.Action("Index", "OrderManagement", new { sortOrder=ViewData["CurrentSort"], page=(Model.PageIndex - 1 <= 0 ? 1 : Model.PageIndex - 1), currentFilter=ViewData["CurrentFilter"] })"
+               class="btn page-link @prevDisabled"><</a>
+        </li>
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            if (i >= Model.PageIndex - ViewBag.PageRange && i <= Model.PageIndex + ViewBag.PageRange)
+            {
+                <li class="page-item">
+                    <a class="@(i==Model.PageIndex ? "Current" : "") page-link"
+                       href="@Url.Action("Index", "OrderManagement", new { sortOrder=ViewData["CurrentSort"], page=i, currentFilter=ViewData["CurrentFilter"] })">@i</a>
+                </li>
+            }
+        }
+        <li class="page-item">
+            <a href="@Url.Action("Index", "OdrerManagement", new { sortOrder=ViewData["CurrentSort"], page=(Model.PageIndex + 1 > Model.TotalPages ? Model.TotalPages : Model.PageIndex + 1), currentFilter=ViewData["CurrentFilter"] })"
+               class="btn page-link @nextDisabled">></a>
+        <li class="page-item">
+            <a href="@Url.Action("Index", "OrderManagement", new { sortOrder=ViewData["CurrentSort"], page=(Model.TotalPages), currentFilter=ViewData["CurrentFilter"] })"
+               class="btn page-link @nextDisabled">>></a>
+    </ul>
+</nav>
+<span class="text-danger">Có @Model.Count đơn hàng</span>
+<div>
+    @using (Html.BeginForm("Index", "OrderManagement", FormMethod.Get))
+    {
+        <span>Trạng thái:</span> @Html.DropDownList("status", EnumHelper.GetSelectList(typeof(ShopWatch.Model.Enum.Status)), "Tất cả hóa đơn", new { @onchange = "this.form.submit();" })
+    }
+</div>
+<table class="table table-condensed table-bordered">
+    <tr class="d-flex">
+        <th class="col-md-2 text-center managecolor">Tên khách hàng</th>
+        <th class="col-md-2 text-center">
+            <a href="@Url.Action("Index", "OrderManagement", new { sortOrder = ViewData["NameSortParm"], currentFilter = ViewData["CurrentFilter"] })">Ngày đặt hàng</a>
+        </th>
+        <th class="col-md-2 text-center">
+            <a href="@Url.Action("Index", "OrderManagement", new { sortOrder = ViewData["PricePromotionSortParm"], currentFilter = ViewData["CurrentFilter"] })">Ngày giao hàng</a>
+        </th>
+        <th class="col-md-1 text-center">
+            <a href="@Url.Action("Index", "OrderManagement", new { sortOrder = ViewData["QuantitySortParm"], currentFilter = ViewData["CurrentFilter"] })">Trạng thái</a>
+        </th>
+        <th class="col-md-1 text-center managecolor">SĐT</th>
+        <th class="col-md-2 text-center">
+            <a href="@Url.Action("Index", "OrderManagement", new { sortOrder = ViewData["TotalSortParm"], currentFilter = ViewData["CurrentFilter"] })">Tổng tiền</a>
+        </th>
+        <th class="col-md-2 text-center managecolor">Quản lý</th>
+    </tr>
 
-		@foreach (var watch in Model)
-		{
-			<tr class="d-flex">
-				<td class="col-md-2 text-center">
-					@watch.User.Name
-				</td>
-				<td class="col-md-2 text-center ">
-					@watch.CreatedDate.ToString("dd/MM/yyyy hh:mm:ss")
-				</td>
-				<td class="col-md-2 text-center">
-					@watch.ShippedDate.ToString("dd/MM/yyyy hh:mm:ss")
-				</td>
-				<td class="col-md-1 text-center">
-					@watch.Status
-				</td>
-				<td class="col-md-1 text-center">
-					@watch.PhoneNumber
-				</td>
-				<td class="col-md-2 text-right">
-					@watch.OrderDetails.Sum(s => s.UnitPrice * s.Quantity).ToString("C0", CultureInfo.CreateSpecificCulture("vi-VN"))
-				</td>
-				<td class="col-md-2" style="text-align: center;">
-					@if (watch.Status != ShopWatch.Model.Enum.Status.Cancelled && watch.Status != ShopWatch.Model.Enum.Status.Finish)
-					{
+    @foreach (var watch in Model)
+    {
+        <tr class="d-flex">
+            <td class="col-md-2 text-center">
+                @watch.User.Name
+            </td>
+            <td class="col-md-2 text-center ">
+                @watch.CreatedDate.ToString("dd/MM/yyyy hh:mm:ss")
+            </td>
+            <td class="col-md-2 text-center">
+                @watch.ShippedDate.ToString("dd/MM/yyyy hh:mm:ss")
+            </td>
+            <td class="col-md-1 text-center">
+                @watch.Status
+            </td>
+            <td class="col-md-1 text-center">
+                @watch.PhoneNumber
+            </td>
+            <td class="col-md-2 text-right">
+                @watch.OrderDetails.Sum(s => s.UnitPrice * s.Quantity).ToString("C0", CultureInfo.CreateSpecificCulture("vi-VN"))
+            </td>
+            <td class="col-md-2" style="text-align: center;">
+                @if (watch.Status != ShopWatch.Model.Enum.Status.Cancelled && watch.Status != ShopWatch.Model.Enum.Status.Finish)
+                {
                     <a href="@Url.Action("Details","OrderManagement", new { id=watch.OrderId })" class="btn btn-dark">Chi tiết</a>
-						<a href="@Url.Action("Edit","OrderManagement", new { id=watch.OrderId })" class="btn btn-primary">Sửa</a>
-					}
-					else if (watch.Status == ShopWatch.Model.Enum.Status.Finish)
-					{
-                <a href="@Url.Action("Details","OrderManagement", new { id=watch.OrderId })" class="btn btn-dark">Chi tiết</a>
-					}
-					else
-					{
-						<form action="/Admin/OrderManagement/Delete/@watch.OrderId" method="post">
-							<a href="@Url.Action("Details","OrderManagement", new { id=watch.OrderId })" class="btn btn-dark">Chi tiết</a>
-							<button type="submit" onclick="return confirm('Bạn có chắc muốn xóa đơn hàng này?');" class="btn btn-danger">Xóa</button>
-						</form>
-					}
+                    <a href="@Url.Action("Edit","OrderManagement", new { id=watch.OrderId })" class="btn btn-primary">Sửa</a>
+                }
+                else if (watch.Status == ShopWatch.Model.Enum.Status.Finish)
+                {
+                    <a href="@Url.Action("Details","OrderManagement", new { id=watch.OrderId })" class="btn btn-dark">Chi tiết</a>
+                    
+                }
+                else
+                {
+                    <form action="/Admin/OrderManagement/Delete/@watch.OrderId" method="post">
+                        <a href="@Url.Action("Details","OrderManagement", new { id=watch.OrderId })" class="btn btn-dark">Chi tiết</a>
+                        <button type="submit" onclick="return confirm('Bạn có chắc muốn xóa đơn hàng này?');" class="btn btn-danger">Xóa</button>
+                    </form>
+                }
 
-				</td>
-			</tr>
-		}
-	</table>
+            </td>
+        </tr>
+    }
+</table>
 

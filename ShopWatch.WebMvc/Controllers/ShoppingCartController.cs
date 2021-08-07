@@ -51,7 +51,7 @@ namespace ShopWatch.WebMvc.Controllers
 
             if (cart.Count == 0 || Session[ConstantCommon.Cart] == null)
             {
-                ViewBag.Message = "Don't have any item in your cart.";
+                ViewBag.Message = "Không có mặt hàng nào trong giỏ hàng của bạn. Mua sắm ngay!";
                 return View();
             }
 
@@ -154,7 +154,6 @@ namespace ShopWatch.WebMvc.Controllers
                     db1.SaveChanges();
                 }
             }
-
             return PartialView(model);
         }
 

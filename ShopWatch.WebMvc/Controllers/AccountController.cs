@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace ShopWatch.WebMvc.Controllers
 {
@@ -22,7 +24,7 @@ namespace ShopWatch.WebMvc.Controllers
         private readonly DbDoAnContect db1 = new DbDoAnContect();
         private readonly ShopWatchDataContext _context;
         private ShopWatchDataContext db = new ShopWatchDataContext();
-
+        
         public AccountController(IAccountService accountService, ShopWatchDataContext context)
 		{
 			_accountService = accountService;
@@ -42,6 +44,7 @@ namespace ShopWatch.WebMvc.Controllers
 		[ValidateInput(false)]
         public ActionResult Login(LoginViewModel loginViewModel)
 		{
+            loginViewModel.PassWord = GetHash(loginViewModel.PassWord);
 			ViewBag.MessageLogin = "";
 			if (ModelState.IsValid)
 			{
@@ -112,7 +115,7 @@ namespace ShopWatch.WebMvc.Controllers
 
             return Redirect("/");
 		}
-
+        
 		[HttpGet]
 		public ActionResult Register()
 		{
@@ -145,8 +148,10 @@ namespace ShopWatch.WebMvc.Controllers
 					ViewBag.MessageRegister += "Email này đã tồn tại !";
 					return View(register);
 				}
-				// Call method create account
-				registerService.RegisterAccount(register);
+                // mã hóa
+                register.Password = GetHash(register.Password);
+                // Call method create account
+                registerService.RegisterAccount(register);
 				ViewData["SuccessMsg"] = "Đăng ký thành công";
 			}
 			return View(register);
@@ -178,7 +183,8 @@ namespace ShopWatch.WebMvc.Controllers
 		[ValidateAntiForgeryToken]
 		public ActionResult ChangePassword(ChangePasswordViewModel changePasswordViewModel)
 		{
-			ViewBag.Message = "";
+            changePasswordViewModel.OldPassword = GetHash(changePasswordViewModel.OldPassword);
+            ViewBag.Message = "";
 			if (!ModelState.IsValid)
 			{
 				return View(changePasswordViewModel);
@@ -192,17 +198,35 @@ namespace ShopWatch.WebMvc.Controllers
 			if(account.Password!=changePasswordViewModel.OldPassword)
 			{
 				ViewBag.Message += "Mật khẩu cũ không đúng,vui lòng nhập lại";
-			}	
-			account.Password = changePasswordViewModel.NewPassword;
-			account.ModifiedDate = DateTime.Now;
-			_context.Accounts.AddOrUpdate(account);
-			_context.SaveChanges();
-			ViewBag.Message += "Đổi mật khẩu thành công";
+			}
+            else
+            {
+                account.Password = changePasswordViewModel.NewPassword;
+                account.Password = GetHash(account.Password);
+                account.ModifiedDate = DateTime.Now;
+                _context.Accounts.AddOrUpdate(account);
+                _context.SaveChanges();
+                ViewBag.Message += "Đổi mật khẩu thành công";
+            }
 			return View(changePasswordViewModel);
 		}
 		public ActionResult UserMenu()
 		{
 			return PartialView();
 		}
-	}
+        public static string GetHash(string plainText)
+        {
+            MD5 md = MD5.Create();
+            // mã hóa md5
+            byte[] inputpw = System.Text.Encoding.ASCII.GetBytes(plainText);
+            byte[] hash = md.ComputeHash(inputpw);
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < hash.Length; i++)
+            {
+                sb.Append(hash[i].ToString("X2"));
+            }
+            return sb.ToString();
+        }
+
+    }
 }

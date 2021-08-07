@@ -1,90 +1,99 @@
 ﻿@model PagedList.IPagedList<ShopWatch.Model.Account>
 @using PagedList.Mvc;
-
 @{
-	ViewBag.Title = "Account";
-	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Account";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 <h2>Tài Khoản</h2>
 <hr />
 <p>
-	@Html.ActionLink("Tạo Tài Khoản", "Create")
+    @Html.ActionLink("Tạo Tài Khoản", "Create")
 </p>
 @using (Html.BeginForm("Index", "Accounts", FormMethod.Get))
 {
-<p>
-	Tên Tài Khoản: @Html.TextBox("SearchString", (string)ViewBag.searchValue) <input type="submit" value="Tìm kiếm" />
-	<a href="/Admin/Accounts/Index" class="btn btn-default">Trở lại danh sách đầy đủ</a>
-	@Html.Hidden("page", (object)ViewBag.page)
-	@Html.Hidden("sortProperty", (object)ViewBag.sortProperty)
-	@Html.Hidden("sortOrder", (object)ViewBag.sortOrder)
-	@Html.Hidden("size", (object)ViewBag.pageSize)
-</p>
+    <p>
+        Tên Tài Khoản: @Html.TextBox("SearchString", (string)ViewBag.searchValue) <input type="submit" value="Tìm kiếm" />
+        <a href="/Admin/Accounts/Index" class="btn btn-default">Trở lại danh sách đầy đủ</a>
+        @Html.Hidden("page", (object)ViewBag.page)
+        @Html.Hidden("sortProperty", (object)ViewBag.sortProperty)
+        @Html.Hidden("sortOrder", (object)ViewBag.sortOrder)
+        @Html.Hidden("size", (object)ViewBag.pageSize)
+    </p>
 }
 <table class="table table-condensed table-bordered">
-	<tr class="d-flex">
-		<th class="col-md-2 text-center">
-			Tên vai trò
-		</th>
-		<th class="col-md-2 text-center">
-			Tên tài khoản
-		</th>
-		<th class="col-md-2 text-center">
-			Mật khẩu
-		</th>
-		<th class="col-md-2 text-center">
-			Ngày tạo
-		</th>
-		<th class="col-md-2 text-center">
-			Ngày sửa đổi
-		</th>
-		<th class="col-md-2 text-center"> Quản lý </th>
-	</tr>
+    <tr class="d-flex">
+        <th class="col-md-1 text-center">
+            Tên vai trò
+        </th>
+        <th class="col-md-2 text-center">
+            Tên tài khoản
+        </th>
+        <th class="col-md-3 text-center">
+            Mật khẩu
+        </th>
+        <th class="col-md-2 text-center">
+            Ngày tạo
+        </th>
+        <th class="col-md-2 text-center">
+            Ngày sửa đổi
+        </th>
+        <th class="col-md-2 text-center"> Quản lý </th>
+    </tr>
 
-	@foreach (var item in Model)
-	{
-		<tr class="d-flex">
-			<td class="col-md-2 text-center">
-				@Html.DisplayFor(modelItem => item.AccountRole.RoleName)
-			</td>
-			<td class="col-md-2 text-center">
-				@Html.DisplayFor(modelItem => item.AccountName)
-			</td>
-			<td class="col-md-2 text-center">
-				@Html.DisplayFor(modelItem => item.Password)
-			</td>
-			<td class="col-md-2 text-center">
-				@Html.DisplayFor(modelItem => item.CreateDate)
-			</td>
-			<td class="col-md-2 text-center">
-				@Html.DisplayFor(modelItem => item.ModifiedDate)
-			</td>
+    @foreach (var item in Model)
+    {
+        <tr class="d-flex">
+            <td class="col-md-1 text-center">
+                @Html.DisplayFor(modelItem => item.AccountRole.RoleName)
+            </td>
+            <td class="col-md-2 text-center">
+                @Html.DisplayFor(modelItem => item.AccountName)
+            </td>
+            <td class="col-md-3 text-center">
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td class="col-md-2 text-center">
+                @Html.DisplayFor(modelItem => item.CreateDate)
+            </td>
+            <td class="col-md-2 text-center">
+                @Html.DisplayFor(modelItem => item.ModifiedDate)
+            </td>
 
-			<td class="col-md-2 text-center">
-				<form action="/Admin/Accounts/Delete/@item.AccountId" method="post">
-					<a href="/Admin/Accounts/Edit/@item.AccountId" class="btn btn-primary">Sửa</a>
-					<button type="submit" onclick="return confirm('Bạn có chắc muốn xóa tài khoản này?');" class="btn btn-danger">Xóa</button>
-				</form>
-			</td>
+            <td class="col-md-2 text-center">
+                @if (item.AccountRoleId == 1)
+                {
+                    <form action="/Admin/Accounts/Delete/@item.AccountId" method="post">
+                        <button type="submit" onclick="return confirm('Bạn có chắc muốn xóa tài khoản này?');" class="btn btn-danger">Xóa</button>
+                    </form>
+                }
+                else if(item.AccountRoleId == 2)
+                {
+                    <form action="/Admin/Accounts/Delete/@item.AccountId" method="post">
+                        <a href="/Admin/Accounts/Edit/@item.AccountId" class="btn btn-primary">Sửa</a>
+                        <button type="submit" onclick="return confirm('Bạn có chắc muốn xóa tài khoản này?');" class="btn btn-danger">Xóa</button>
+                    </form>
+                }
 
-		</tr>
-	}
+            </td>
+
+        </tr>
+    }
 </table>
 
 <!-- Thêm mã phân trang -->
 <br />
 <div class="row">
-	<div class="col-md-6 col-lg-6 col-xs-6 col-sm-6">
-		@using (Html.BeginForm("Index", "Accounts", FormMethod.Get))
-		{
-			<p>
-				Kích thước trang: @Html.DropDownList("size", (List<SelectListItem>)ViewBag.size, new { @onchange = "this.form.submit();" })
-			</p>
-		}
-	</div>
-	<div class="col-md-6 col-lg-6 col-xs-6 col-sm-6 text-right">
-		Trang: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
-	</div>
+    <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6">
+        @using (Html.BeginForm("Index", "Accounts", FormMethod.Get))
+        {
+            <p>
+                Kích thước trang: @Html.DropDownList("size", (List<SelectListItem>)ViewBag.size, new { @onchange = "this.form.submit();" })
+            </p>
+        }
+    </div>
+    <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6 text-right">
+        Trang: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+    </div>
 </div>
 
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, size = ViewBag.currentSize }))

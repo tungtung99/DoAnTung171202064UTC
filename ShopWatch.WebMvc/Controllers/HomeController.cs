@@ -25,7 +25,7 @@ namespace ShopWatch.WebMvc.Controllers
             Func<IQueryable<Watch>, IOrderedQueryable<Watch>> orderBy = null;
             orderBy = b => b.OrderBy(s => s.Quantity);
             if (search==null || search=="")
-			{				
+			{
                 var watches = _watchServices.GetAsync(orderBy: orderBy, page: page ?? 1, pageSize: 12);
                 page = 1;
                 return View(watches);
