@@ -1,11 +1,12 @@
 ﻿@using ShopWatch.WebMvc.ViewModels
+@using ShopWatch.WebMvc.Models
+@using ShopWatch.Model
 @model OrderViewModel
 
 @{
     ViewBag.Title = "Checkout";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <style>
     .titlebold {
         font-weight: bold;
@@ -19,42 +20,55 @@
     <div class="col-md-6 mb-3">
         <div class="form-group">
             <label for="address" class="titlebold">Họ tên:</label>
-            <input type="text" class="form-control" name="Username" id="Username" placeholder="Họ và tên">
+            <input type="text" class="form-control" name="Username" id="Username" placeholder="Họ và tên" value="@Model.Name" readonly>
             <span class="text-danger" asp-validation-for="Username"></span>
         </div>
         <div class="form-group">
             <div class="titlebold">Địa chỉ:</div>
             <div class="row">
                 <div class="col-sm-6">
+                    @*@Html.Hidden("provin", Model.Provin)*@
+                    @Html.HiddenFor(t => t.Provin)
+                    @Html.HiddenFor(t => t.District)
+                    @*@Html.Hidden("distric", Model.District)*@
                     <p class="titlebold" style="height:7px;">Tỉnh/Thành phố</p>
                     <select id="countrySelect" size="1" onchange="makeSubmenu(this.value)" value="@Model.ShipAddresss" style="width:100%; margin-bottom:5px;">
-                        <option value="hanoi">Hà Nội</option>
-                        <option value="thanhhoa">Thanh Hóa</option>
-                        <option value="hanam">Hà Nam</option>
-                        <option value="saigon">Sài Gòn</option>
+                        @foreach (var item in Golobal.provinces)
+                        {
+                            <option value="@item.provinceid">@item.name</option>
+                        }
                     </select>
                 </div>
                 <div class="col-sm-6">
                     <p class="titlebold" style="height:7px;">Quận/Huyện</p>
-                    <select id="citySelect" size="1"  style="width:100%; margin-bottom:5px;">
-                        <option value="hanoi">Hà Nội</option>
-                        <option value="thanhhoa">Thanh Hóa</option>
-                        <option value="hanam">Hà Nam</option>
-                        <option value="saigon">Sài Gòn</option>
+                    <select id="citySelect" size="1" onchange="makeSubmenu1(this.value)" style="width:100%; margin-bottom:5px;">
+                        @foreach (var item in Golobal.districts)
+                        {
+                            <option value="@item.provinceid">@item.name</option>
+                        }
                     </select>
                 </div>
             </div>
-            <input type="text" class="form-control" name="ShipAddress" id="ShipAddress" placeholder="địa chỉ chi tiết" value="@Model.ShipAddress" required>
-            <span class="text-danger" asp-validation-for="ShipAddress"></span>
+            @using (Html.BeginForm())
+            {
+                <div class="form-group">
+                    <div>
+                        @Html.TextBoxFor(m => m.ShipAddress, new { @class = "form-control"})
+                        @Html.ValidationMessageFor(m => m.ShipAddress, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            }
+            @*<input type="text" class="form-control" name="ShipAddress" id="ShipAddress" placeholder="địa chỉ chi tiết" value="@Model.ShipAddress" required>
+        <span class="text-danger" asp-validation-for="ShipAddress"></span>*@
         </div>
         <div class="form-group row">
             <div class="col-sm-6">
                 <label asp-for="PhoneNumber" class="titlebold">Số điện thoại:</label>
-                <input name="PhoneNumber" type="tel" class="form-control" id="phoneNumber" placeholder="Số điện thoại" value="@Model.PhoneNumber" required>
+                <input name="PhoneNumber" type="tel" class="form-control" id="phoneNumber" placeholder="Số điện thoại" value="@Model.PhoneNumber" required readonly>
             </div>
             <div class="col-sm-6">
                 <label asp-for="Email" class="titlebold">Email:</label>
-                <input name="Email" type="email" class="form-control" id="email" placeholder="Email">
+                <input name="Email" type="email" class="form-control" id="email" placeholder="Email" value="@Model.Email" readonly>
             </div>
         </div>
         <div class="form-group" style="text-align:center;">
@@ -82,14 +96,28 @@
     }
     function makeSubmenu(value) {
         console.log(value)
+        var data = @Html.Raw(Json.Encode(ViewBag.District));
+        var dataProvin = @Html.Raw(Json.Encode(ViewBag.Provinces));
+        var provin = document.getElementById("Provin");
+        document.getElementById("Provin").value = dataProvin.find(x => x.provinceid.replace(/\s+/g, '') == value).name
+        //document.getElementById("District").value = 'Thanh phoos ha noi'
         if (value.length == 0) document.getElementById("citySelect").innerHTML = "<option></option>";
         else {
             var citiesOptions = "";
-            for (cityId in citiesByState[value]) {
-                citiesOptions += "<option>" + citiesByState[value][cityId] + "</option>";
+            var dataSelect = data.filter(x => x.provinceid.replace(/\s+/g, '') == value);
+            for(var i = 0 ; i < dataSelect.length ; i++){
+                citiesOptions += "<option>" + dataSelect[i].name + "</option>";
             }
             document.getElementById("citySelect").innerHTML = citiesOptions;
+
         }
+    }
+    function makeSubmenu1(value) {
+        console.log(value)
+        var data = @Html.Raw(Json.Encode(ViewBag.District));
+        var dataDistric = @Html.Raw(Json.Encode(ViewBag.District1));
+        var provin = document.getElementById("District");
+        document.getElementById("District").value = value;
     }
     function displaySelected() {
         var country = document.getElementById("countrySelect").value;
@@ -97,6 +125,7 @@
         alert(country + "\n" + city);
     }
     function resetSelection() {
+    console.log(@Html.Raw(Json.Encode(ViewBag.District)));
         document.getElementById("countrySelect").selectedIndex = 0;
         document.getElementById("citySelect").selectedIndex = 0;
     }

@@ -2,6 +2,7 @@
 using ShopWatch.Model.DataContext;
 using ShopWatch.Model.Enum;
 using ShopWatch.WebMvc.Areas.Admin.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -33,14 +34,29 @@ namespace ShopWatch.WebMvc.Areas.Admin.Controllers
 		}
 		
 		public ActionResult ByDay(int? year,int? month)
-		{
-			if (year == null) year = 2021;
-			if (month == null) month = 1;
+		{           
+            if (year == null) year = 2021;
+            if (month == null) {
+                month = 1;
+            }
+            else
+            {
+                ViewBag.days = DateTime.DaysInMonth((int)year, (int)month);
+            }
 			ViewBag.year = _context.Orders.Select(s => s.CreatedDate.Year).Distinct().ToList();
-			var result = _context.Orders.Where(s => (s.Status == Status.Finish && s.CreatedDate.Year == year && s.CreatedDate.Month==month));
-			return View(result);
+            ViewBag.month = month;
+            var result = _context.Orders.Where(s => (s.Status == Status.Finish && s.CreatedDate.Year == year && s.CreatedDate.Month==month));
+            return View(result);
 		}
 
-		
-	}
+
+        public ActionResult selectMonth(int? month)
+        {     
+            return Json(new
+            {
+                month = month
+            });            
+        }
+
+    }
 }

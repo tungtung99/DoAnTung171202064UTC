@@ -1,57 +1,127 @@
 ﻿@using ShopWatch.Model
 @model IEnumerable<Order>
 @{
-	ViewBag.Title = "Doanh thu theo ngày";
-	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Doanh thu theo ngày";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 @{
-	var year = (List<int>)ViewBag.year;
+    var year = (List<int>)ViewBag.year;
 }
+<style>
+    table {
+        margin: 10px 0px 10px 0px;
+    }
+
+    td, th {
+        font-size: 32px;
+    }
+
+    .clom1 {
+        width: 20%;
+    }
+
+    .clom2 {
+        text-align: right;
+        width: 20%;
+    }
+
+    .clom3 {
+        text-align: right;
+        width: 40%;
+    }
+</style>
+
 <h2>Doanh thu theo ngày</h2>
 <form action="/Admin/StatisticalManagement/ByDay" method="get">
-	Năm
-	<select name="year">
-		@foreach (var item in year)
-		{
-			<option value="@item">@item</option>
-		}
-	</select>
-	Tháng
-	<select name="month" id="month" @*onchange="show(this.value*@)">
-		@for (int i = 1; i < 13; i++)
-		{
-			<option value="@i">@i</option>
-		}
-	</select>
-	<button type="submit" class="btn-outline-info">Lọc</button>
-</form>
-<hr />
+    Năm
+    <select name="year">
+        @foreach (var item in year)
+        {
+            <option value="@item">@item</option>
+        }
+    </select>
+    Tháng
+    <select name="month" id="month">
+        @for (int i = 1; i < 13; i++)
+        {
+            if (ViewBag.month != null && i == (int)ViewBag.month)
+            {
+                <option value="@i" selected>@i</option>
+            }
+            else
+            {
+                <option value="@i">@i</option>
+            }
 
-<span class="h2" id="title"></span> 
-@if (Model.Count()>0)
-{
-<span class="h2">
-	Doanh thu tháng @Model.Select(s => s.CreatedDate.Month).FirstOrDefault():
-	@string.Format("{0:0,0}", Model.Sum(s => s.OrderDetails.Sum(o => (o.Quantity * o.UnitPrice)))) VNĐ
-</span>
-}
-<hr />
-<div class="row">
-	@foreach (var item in Model.Select(s=>s.CreatedDate.Date))
-	{
-	<div class="col-md-2">
-		<b class="h3">Doanh ngày @item.Date.ToString("dd/MM/yyyy")</b>
-		<br />
-		@string.Format("{0:0,0}",
-	   Model.Where(a => a.CreatedDate.Date == item).Sum(s => s.OrderDetails.Sum(o => o.Quantity * o.UnitPrice))) VNĐ
-		<p></p>
-	</div>
-	}
+
+        }
+    </select>
+    <button type="submit" class="btn-outline-info">Lọc</button>
+</form>
+<div>
+    <span class="h2" id="title"></span>
+    <table style="width:80%;" border="1">
+        <tr style="width:500px;">
+            <th class="clom1">Ngày</th>
+            <th class="clom2">Tổng hóa đơn</th>
+            <th class="clom3">Doanh thu(đ)</th>
+        </tr>
+        @{
+            var month = Model.Select(s => s.CreatedDate.Month).FirstOrDefault();
+
+        }
+        @for (int i = 1; i <= ViewBag.days; i++)
+        {
+            <tr>
+                <td class="clom1">Ngày @i/@ViewBag.month/@DateTime.Now.Year</td>
+                <td class="clom2">
+                    @string.Format("{0:0}",
+                        Model.Where(a => a.CreatedDate.Day == i).Sum(s => s.OrderDetails.Sum(o => o.Quantity)))
+                </td>
+                <td class="clom3">
+                    @string.Format("{0:0,0}",
+                        Model.Where(a => a.CreatedDate.Day == i).Sum(s => s.OrderDetails.Sum(o => o.Quantity * o.UnitPrice)))
+                </td>
+            </tr>
+        }
+    </table>
 </div>
-<br />
+@*<span class="h2" id="title"></span>
+    @if (Model.Count()>0)
+    {
+    <span class="h2">
+        Doanh thu tháng @Model.Select(s => s.CreatedDate.Month).FirstOrDefault():
+        @string.Format("{0:0,0}", Model.Sum(s => s.OrderDetails.Sum(o => (o.Quantity * o.UnitPrice)))) VNĐ
+    </span>
+    }
+    <div class="row">
+        @foreach (var item in Model.Select(s=>s.CreatedDate.Date))
+        {
+        <div class="col-md-2">
+            <b class="h3">Doanh ngày @item.Date.ToString("dd/MM/yyyy")</b>
+            <br />
+            @string.Format("{0:0,0}",
+           Model.Where(a => a.CreatedDate.Date == item).Sum(s => s.OrderDetails.Sum(o => o.Quantity * o.UnitPrice))) VNĐ
+            <p></p>
+        </div>
+        }
+    </div>*@
 <a href="/Admin/StatisticalManagement" class="btn btn-outline-info">Quay trở về</a>
 <script>
-	function show(a) {
-		document.getElementById("title").innerHTML = 'Doanh thu tháng ' + a+':';
-	}
+
+</script>
+<script src="/Assets/js/jquery-3.3.1.min.js"></script>
+<script>
+    function show(a) {
+        document.getElementById("title").innerHTML = 'Doanh thu tháng ' + a + ':';
+    }
+    function getvalue(a) {
+        document.getElementById("title").innerHTML = 'Doanh thu tháng ' + a + ':';
+    }
+    $('select[name="month"').on('change', function () {
+        var d = new Date();
+         var year  = d.getFullYear();      
+        var month = Number(this.value);
+        window.location.href = `/Admin/StatisticalManagement/ByDay?year=${year}&month=${month}`;       
+    });
 </script>

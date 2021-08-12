@@ -1,35 +1,64 @@
 ﻿@using ShopWatch.Model
 @model IEnumerable<Order>
 @{
-	ViewBag.Title = "Doanh thu theo tháng";
-	Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Doanh thu theo tháng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 @{
-	var year = (List<int>)ViewBag.year;
+    var year = (List<int>)ViewBag.year;
 }
-<h2>Doanh thu theo tháng</h2>
+<style>
+    table{
+        margin: 10px 0px 10px 0px;
+    }
+    td , th{
+        font-size:32px;
+    }
+    .clom1{        
+        width:20%;
+    }.clom2{
+         text-align:right;
+        width:20%;
+    }.clom3{
+         text-align:right;
+        width:40%;
+    }
+</style>
+<h1>Doanh thu theo tháng</h1>
 <form action="/Admin/StatisticalManagement/ByMonth" method="get">
-	
-	@*<span>Năm </span> @Html.DropDownList("nam", new SelectList(ViewBag.year, "Value", "Text"), "Chọn năm") - Bị lỗi k nhận giá trị*@
-	<select name="nam">
-		@foreach (var item in year)
-		{
-			<option value="@item">@item</option>
-		}
 
-	</select>
-	<button type="submit" class="btn-outline-info">Lọc</button>
+    @*<span>Năm </span> @Html.DropDownList("nam", new SelectList(ViewBag.year, "Value", "Text"), "Chọn năm") - Bị lỗi k nhận giá trị*@
+    <select name="nam">
+        @foreach (var item in year)
+        {
+            <option value="@item">@item</option>
+        }
+
+    </select>
+    <button type="submit" class="btn-outline-info">Lọc</button>
 </form>
-<div class="row">
-	@for (int i = 1; i < 13; i++)
-	{
-	<div class="col-md-2">
-		<b class="h3">Doanh thu tháng @i</b>
-		<br />
-		@string.Format("{0:0,0}",
-	   Model.Where(a => a.CreatedDate.Month == i).Sum(s => s.OrderDetails.Sum(o => o.Quantity * o.UnitPrice))) VNĐ
-		<p></p>
-	</div>
-	}
+<div>
+    <table style="width:80%;" border="1">
+        <tr style="width:500px;">
+            <th class="clom1">Tháng</th>
+            <th class="clom2">Tổng hóa đơn</th>
+            <th class="clom3">Doanh thu(đ)</th>
+        </tr>
+        @for (int i = 1; i < 13; i++)
+        {
+            <tr>
+
+                <td class="clom1">Tháng @i</td>
+                <td class="clom2">
+                    @string.Format("{0:0}",
+                        Model.Where(a => a.CreatedDate.Month == i).Sum(s => s.OrderDetails.Sum(o => o.Quantity)))
+                </td>
+                <td class="clom3">
+                    @string.Format("{0:0,0}",
+                        Model.Where(a => a.CreatedDate.Month == i).Sum(s => s.OrderDetails.Sum(o => o.Quantity * o.UnitPrice)))
+                </td>
+            </tr>
+        }
+    </table>
 </div>
 <a href="/Admin/StatisticalManagement" class="btn btn-outline-info">Quay trở về</a>

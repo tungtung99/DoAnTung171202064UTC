@@ -54,7 +54,7 @@ else
                     </td>
                     <td><a href="#" class="incrproduct btn btn-outline-warning" data-id="@item.WatchId">+</a></td>
                     <td class="total@(item.WatchId)">
-                        @item.Total
+                        @item.Total.ToString("C0", CultureInfo.CreateSpecificCulture("vi-VN"))
                     </td>
                     <td>
                         <a href="#" class="removeproduct" data-id="@item.WatchId">Xóa</a>
@@ -64,7 +64,7 @@ else
 
             <tr>
                 <td colspan="6">Tổng:</td>
-                <td class="grandtotal"><span>@ViewBag.GrandTotal</span></td>
+                <td class="grandtotal"><span>@ViewBag.GrandTotal.ToString("C0", CultureInfo.CreateSpecificCulture("vi-VN"))</span></td>
             </tr>
         </table>
     </div>

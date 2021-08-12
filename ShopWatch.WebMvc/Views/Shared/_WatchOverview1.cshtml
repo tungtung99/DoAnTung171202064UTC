@@ -3,7 +3,7 @@
 @model Watch
 @{
     var promotion = Model.Promotions.FirstOrDefault(item => (item.StartDate <= DateTime.Now && DateTime.Now <= item.EndDate));
-    var isCheckCount = Model.Quantity <= 5 ? true : false;
+    var isCheckCount = Model.Quantity <= 10 ? true : false;
 }
     <div class="col-md-3" style="margin-top: 50px">
         <a href="/Watch/Details/@Model.WatchId"><img class="img-fluid img-thumbnail" style="height:80%;width:100%" src="~/Assets/images/HINHLON/@Model.ImageUrl" /></a>

@@ -31,10 +31,28 @@ namespace ShopWatch.WebMvc.Controllers
             _db1 = db1;
 		}
 
-		public ActionResult Checkout()
+        //public ActionResult GetProvince(int id)
+        //{
+        //    ReadFile.ReadFileTxt();
+        //    var abc = Golobal.wards;
+        //    var abc1 = Golobal.districts.Where(x=>x.provinceid.Equals(id));
+        //    var abc2 = Golobal.villages;
+        //    var abc3 = Golobal.provinces;
+        //    return abc1;
+        //}
+
+        public ActionResult Checkout()
 		{
+            ReadFile.ReadFileTxt();
+            var abc = Golobal.wards;
+            var abc1 = Golobal.districts;
+            var abc2 = Golobal.villages;
+            var abc3 = Golobal.provinces;
 			var session = (UserLogin)Session["UserSession"];
-			if (session != null)
+            ViewBag.District = abc1;
+            ViewBag.Provinces = abc3;
+            ViewBag.District1 = abc1;
+            if (session != null)
 			{
 				var user = _context.Users.SingleOrDefault(m => m.AccountId == session.AccountId);
 				if(user==null)
@@ -43,10 +61,11 @@ namespace ShopWatch.WebMvc.Controllers
 				}
 				else
 				{
-					var orderViewModel = new OrderViewModel()
-					{
-						ShipAddress = user.Address+user.City,
-						PhoneNumber = user.Phone,
+                    var orderViewModel = new OrderViewModel()
+                    {
+                        Name = user.Name,
+                        Email = user.Email,
+                        PhoneNumber = user.Phone,
 					};
 					return View(orderViewModel);
 				}
@@ -74,7 +93,7 @@ namespace ShopWatch.WebMvc.Controllers
 				List<OrderDetail> orderDetails = new List<OrderDetail>();
 				var order = new Order()
 				{
-					ShipAddress = orderViewModel.ShipAddress,
+					ShipAddress = orderViewModel.ShipAddress +"-"+ orderViewModel.District +"-"+ orderViewModel.Provin,
 					PhoneNumber = orderViewModel.PhoneNumber,
 					UserId = customer.UserId
 
